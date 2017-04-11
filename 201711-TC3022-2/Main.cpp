@@ -15,6 +15,7 @@ Pedro Ángel González González A01169094
 #include "Transform.h"
 #include <iostream>
 #include <vector>
+#include <sstream>
 
 Mesh _sineWaveMesh;
 ShaderProgram _SineWaveShaderProgram;
@@ -30,7 +31,6 @@ void Initialize()
 {
 	std::vector<glm::vec3> positions;
 	std::vector<glm::vec3> colors;
-	std::vector<glm::vec3> normals;
 	std::vector<unsigned int> indices{0,1,2,0,2,3};
 
 	positions.push_back(glm::vec3(-1.0f, -1.0f, 0.0f));
@@ -46,7 +46,6 @@ void Initialize()
 	_sineWaveMesh.CreateMesh(4);
 	_sineWaveMesh.SetPositionAttribute(positions, GL_STATIC_DRAW, 0);
 	_sineWaveMesh.SetColorAttribute(colors, GL_STATIC_DRAW, 1);
-	_sineWaveMesh.SetColorAttribute(normals, GL_STATIC_DRAW, 2);
 	_sineWaveMesh.SetIndices(indices, GL_STATIC_DRAW);
 
 	_SineWaveShaderProgram.CreateProgram();
@@ -61,6 +60,33 @@ void Initialize()
 	
 	_camera.SetPosition(0.0f, 0.0f, -8.0f);
 	_camera.SetRotation(-20.0f, 0.0f, 0.0f);
+
+	glm::vec3 translations[1000];
+	int index = 0;
+	GLfloat offset = 1.0f;
+	for (GLint z = -10; z < 10; z += 2) {
+		for (GLint y = -10; y < 10; y += 2)
+		{
+			for (GLint x = -10; x < 10; x += 2)
+			{
+				glm::vec3 translation;
+				translation.x = (GLfloat)x / 10.0f + offset;
+				translation.y = (GLfloat)y / 10.0f + offset;
+				translation.z = (GLfloat)z / 10.0f + offset;
+				translations[index++] = translation;
+			}
+		}
+	}
+	_SineWaveShaderProgram.Activate();
+	for (GLuint i = 0; i < 1000; i++)
+	{
+		std::stringstream _ss;
+		std::string _index;
+		_ss << i;
+		_index = _ss.str();
+		_SineWaveShaderProgram.SetUniformf("offsets[" + _index + "]", translations[i].x, translations[i].y, translations[i].z);
+	}
+	_SineWaveShaderProgram.Deactivate();
 }
 
 void Idle()
@@ -79,7 +105,6 @@ void GameLoop()
 	if (time >= 360)
 		time = 0;
 
-	_camera.SetRotation(glm::vec3(0.0f, 0.0f, time*10.0f));
 	_SineWaveShaderProgram.Activate();
 	
 	_SineWaveShaderProgram.SetUniformMatrix("mvpMatrix", _camera.GetViewProjection()*_SineWaveTransform.GetModelMatrix());
@@ -87,7 +112,7 @@ void GameLoop()
 	_SineWaveShaderProgram.SetUniformMatrix("ProjectionMatrix", _camera.GetProjectionMatrix());
 	_SineWaveShaderProgram.SetUniformMatrix("ViewMatrix", _camera.GetViewMatrix());
 	_SineWaveShaderProgram.SetUniformMatrix("ModelMatrix", _SineWaveTransform.GetModelMatrix());
-	_sineWaveMesh.Draw(GL_TRIANGLES);
+	_sineWaveMesh.Draw(GL_TRIANGLES, 1000);
 		
 	_SineWaveShaderProgram.Deactivate();
 

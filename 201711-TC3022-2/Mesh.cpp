@@ -40,6 +40,18 @@ void Mesh::Draw(GLenum primitive)
 	glBindVertexArray(0);
 }
 
+void Mesh::Draw(GLenum primitive, int instances)
+{
+	glBindVertexArray(_vertexArrayObject);
+
+	if (_indicesCount)
+		glDrawElementsInstanced(primitive, _indicesCount, GL_UNSIGNED_INT, nullptr, instances);
+	else
+		glDrawArraysInstanced(primitive, 0, _vertexCount, instances);
+
+	glBindVertexArray(0);
+}
+
 void Mesh::SetPositionAttribute(std::vector<glm::vec2> positions, GLenum usage, GLuint locationIndex)
 {
 	if (positions.size() > 0 && positions.size() == _vertexCount)
