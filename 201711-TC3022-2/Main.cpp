@@ -31,7 +31,7 @@ void Initialize()
 {
 	std::vector<glm::vec3> positions;
 	std::vector<glm::vec3> colors;
-	std::vector<unsigned int> indices{0,1,2,0,2,3};
+	std::vector<unsigned int> indices{ 0,1,2,0,2,3 };
 
 	positions.push_back(glm::vec3(-1.0f, -1.0f, 0.0f));
 	positions.push_back(glm::vec3(1.0f, -1.0f, 0.0f));
@@ -57,7 +57,7 @@ void Initialize()
 	_SineWaveShaderProgram.LinkProgram();
 	_SineWaveShaderProgram.Deactivate();
 
-	
+
 	_camera.SetPosition(0.0f, 0.0f, -8.0f);
 	_camera.SetRotation(-20.0f, 0.0f, 0.0f);
 
@@ -106,14 +106,14 @@ void GameLoop()
 		time = 0;
 
 	_SineWaveShaderProgram.Activate();
-	
+
 	_SineWaveShaderProgram.SetUniformMatrix("mvpMatrix", _camera.GetViewProjection()*_SineWaveTransform.GetModelMatrix());
 	_SineWaveShaderProgram.SetUniformMatrix("ModelViewMatrix", _camera.GetViewMatrix()*_SineWaveTransform.GetModelMatrix());
 	_SineWaveShaderProgram.SetUniformMatrix("ProjectionMatrix", _camera.GetProjectionMatrix());
 	_SineWaveShaderProgram.SetUniformMatrix("ViewMatrix", _camera.GetViewMatrix());
 	_SineWaveShaderProgram.SetUniformMatrix("ModelMatrix", _SineWaveTransform.GetModelMatrix());
 	_sineWaveMesh.Draw(GL_TRIANGLES, 1000);
-		
+
 	_SineWaveShaderProgram.Deactivate();
 
 
