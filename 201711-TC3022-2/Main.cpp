@@ -13,40 +13,26 @@ Pedro Ángel González González A01169094
 #include "ShaderProgram.h"
 #include "Texture2D.h"
 #include "Transform.h"
+#include "Billboard.h"
 #include <iostream>
 #include <vector>
 #include <sstream>
 
 Mesh _sineWaveMesh;
 ShaderProgram _SineWaveShaderProgram;
-
+Billboard _billboard;
 Transform _SineWaveTransform;
-Texture2D _SineWaveTexture;
-Texture2D _heightMap;
 
 Camera _camera;
 float time;
 
 void Initialize()
 {
-	std::vector<glm::vec3> positions;
-	std::vector<glm::vec3> colors;
-	std::vector<unsigned int> indices{ 0,1,2,0,2,3 };
-
-	positions.push_back(glm::vec3(-1.0f, -1.0f, 0.0f));
-	positions.push_back(glm::vec3(1.0f, -1.0f, 0.0f));
-	positions.push_back(glm::vec3(1.0f, 1.0f, 0.0f));
-	positions.push_back(glm::vec3(-1.0f, 1.0f, 0.0f));
-
-	colors.push_back(glm::vec3(1.0f, 1.0f, 1.0f));
-	colors.push_back(glm::vec3(1.0f, 1.0f, 1.0f));
-	colors.push_back(glm::vec3(1.0f, 1.0f, 1.0f));
-	colors.push_back(glm::vec3(1.0f, 1.0f, 1.0f));
 
 	_sineWaveMesh.CreateMesh(4);
-	_sineWaveMesh.SetPositionAttribute(positions, GL_STATIC_DRAW, 0);
-	_sineWaveMesh.SetColorAttribute(colors, GL_STATIC_DRAW, 1);
-	_sineWaveMesh.SetIndices(indices, GL_STATIC_DRAW);
+	_sineWaveMesh.SetPositionAttribute(_billboard.GetPositions(), GL_STATIC_DRAW, 0);
+	_sineWaveMesh.SetColorAttribute(_billboard.GetColors(), GL_STATIC_DRAW, 1);
+	_sineWaveMesh.SetIndices(_billboard.GetIndices(), GL_STATIC_DRAW);
 
 	_SineWaveShaderProgram.CreateProgram();
 	_SineWaveShaderProgram.Activate();
@@ -101,18 +87,34 @@ void GameLoop()
 	// y la información de profundidad.
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
-	time += 0.0005f;
-	if (time >= 360)
-		time = 0;
-
 	_SineWaveShaderProgram.Activate();
 
-	_SineWaveShaderProgram.SetUniformMatrix("mvpMatrix", _camera.GetViewProjection()*_SineWaveTransform.GetModelMatrix());
-	_SineWaveShaderProgram.SetUniformMatrix("ModelViewMatrix", _camera.GetViewMatrix()*_SineWaveTransform.GetModelMatrix());
-	_SineWaveShaderProgram.SetUniformMatrix("ProjectionMatrix", _camera.GetProjectionMatrix());
-	_SineWaveShaderProgram.SetUniformMatrix("ViewMatrix", _camera.GetViewMatrix());
-	_SineWaveShaderProgram.SetUniformMatrix("ModelMatrix", _SineWaveTransform.GetModelMatrix());
-	_sineWaveMesh.Draw(GL_TRIANGLES, 1000);
+	time += 0.0005f;
+	if (time >= 360) {
+		time = 0;
+	}
+
+	//Así más o menos se harían como por tanta (habría que modificar el espaciado y caída en x,y)
+	for (int i = 0; i < 10; i++) {
+		//Tanda 1
+		_SineWaveShaderProgram.SetUniformMatrix("mvpMatrix", _camera.GetViewProjection()*_SineWaveTransform.GetModelMatrix());
+		_SineWaveShaderProgram.SetUniformMatrix("ModelViewMatrix", _camera.GetViewMatrix()*_SineWaveTransform.GetModelMatrix());
+		_SineWaveShaderProgram.SetUniformMatrix("ProjectionMatrix", _camera.GetProjectionMatrix());
+		_SineWaveShaderProgram.SetUniformMatrix("ViewMatrix", _camera.GetViewMatrix());
+		_SineWaveShaderProgram.SetUniformMatrix("ModelMatrix", _SineWaveTransform.GetModelMatrix());
+		_sineWaveMesh.Draw(GL_TRIANGLES);
+		_SineWaveTransform.SetPosition(i+5,-time*2,0.0f);
+
+		//Tanda 2
+		_SineWaveShaderProgram.SetUniformMatrix("mvpMatrix", _camera.GetViewProjection()*_SineWaveTransform.GetModelMatrix());
+		_SineWaveShaderProgram.SetUniformMatrix("ModelViewMatrix", _camera.GetViewMatrix()*_SineWaveTransform.GetModelMatrix());
+		_SineWaveShaderProgram.SetUniformMatrix("ProjectionMatrix", _camera.GetProjectionMatrix());
+		_SineWaveShaderProgram.SetUniformMatrix("ViewMatrix", _camera.GetViewMatrix());
+		_SineWaveShaderProgram.SetUniformMatrix("ModelMatrix", _SineWaveTransform.GetModelMatrix());
+		_sineWaveMesh.Draw(GL_TRIANGLES);
+		_SineWaveTransform.SetPosition(i +5, -time*5 + 5, 0.0f);
+	}
+	
 
 	_SineWaveShaderProgram.Deactivate();
 

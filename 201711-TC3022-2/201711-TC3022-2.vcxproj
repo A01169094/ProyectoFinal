@@ -73,6 +73,10 @@
     <IncludePath>C:\Libraries\include;$(IncludePath)</IncludePath>
     <LibraryPath>C:\Libraries\lib;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <IncludePath>C:\Libraries\include;$(IncludePath)</IncludePath>
+    <LibraryPath>C:\Libraries\lib;$(LibraryPath)</LibraryPath>
+  </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
       <WarningLevel>Level3</WarningLevel>
@@ -89,6 +93,9 @@
       <Optimization>Disabled</Optimization>
       <SDLCheck>true</SDLCheck>
     </ClCompile>
+    <Link>
+      <AdditionalDependencies>glew32.lib;freeglut.lib;%(AdditionalDependencies)</AdditionalDependencies>
+    </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <ClCompile>
@@ -117,6 +124,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Billboard.cpp" />
     <ClCompile Include="Camera.cpp" />
     <ClCompile Include="InputFile.cpp" />
     <ClCompile Include="Main.cpp" />
@@ -143,6 +151,7 @@
     <None Include="SineWave.vert" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Billboard.h" />
     <ClInclude Include="Camera.h" />
     <ClInclude Include="InputFile.h" />
     <ClInclude Include="Mesh.h" />
@@ -152,11 +161,9 @@
     <ClInclude Include="Transform.h" />
   </ItemGroup>
   <ItemGroup>
-    <Image Include="box1.jpg" />
-    <Image Include="box2.png" />
-    <Image Include="box3.jpg" />
-    <Image Include="crate.png" />
-    <Image Include="dog.png" />
+    <Image Include="..\..\..\Visual Studio 2015\Projects\201711-TC3022-2-master\201711-TC3022-2\lluvia.png" />
+    <Image Include="..\..\..\Visual Studio 2015\Projects\201711-TC3022-2-master\201711-TC3022-2\nieve.png" />
+    <Image Include="..\..\..\Visual Studio 2015\Projects\201711-TC3022-2-master\201711-TC3022-2\polvo.png" />
     <Image Include="heighmap.jpg" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

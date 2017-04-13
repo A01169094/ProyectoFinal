@@ -42,6 +42,9 @@
     <ClCompile Include="Texture2D.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="Billboard.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="PalmTree.frag">
@@ -109,24 +112,21 @@
     <ClInclude Include="Texture2D.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="Billboard.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <Image Include="crate.png">
-      <Filter>Resource Files</Filter>
-    </Image>
-    <Image Include="box1.jpg">
-      <Filter>Resource Files</Filter>
-    </Image>
-    <Image Include="box2.png">
-      <Filter>Resource Files</Filter>
-    </Image>
-    <Image Include="box3.jpg">
-      <Filter>Resource Files</Filter>
-    </Image>
-    <Image Include="dog.png">
-      <Filter>Resource Files</Filter>
-    </Image>
     <Image Include="heighmap.jpg">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="..\..\..\Visual Studio 2015\Projects\201711-TC3022-2-master\201711-TC3022-2\lluvia.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="..\..\..\Visual Studio 2015\Projects\201711-TC3022-2-master\201711-TC3022-2\nieve.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="..\..\..\Visual Studio 2015\Projects\201711-TC3022-2-master\201711-TC3022-2\polvo.png">
       <Filter>Resource Files</Filter>
     </Image>
   </ItemGroup>

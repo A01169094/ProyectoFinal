@@ -32,7 +32,7 @@ void Mesh::Draw(GLenum primitive)
 {
 	glBindVertexArray(_vertexArrayObject);
 
-	if (_indicesCount)
+	if (_indicesCount) 
 		glDrawElements(primitive, _indicesCount, GL_UNSIGNED_INT, nullptr);
 	else
 		glDrawArrays(primitive, 0, _vertexCount);
