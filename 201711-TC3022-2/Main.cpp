@@ -18,7 +18,7 @@ Pedro Ángel González González A01169094
 #include <vector>
 #include <sstream>
 
-Mesh _sineWaveMesh;
+//Mesh _sineWaveMesh;
 ShaderProgram _SineWaveShaderProgram;
 Billboard _billboard;
 Transform _SineWaveTransform;
@@ -28,17 +28,13 @@ float time;
 
 void Initialize()
 {
-
-	_sineWaveMesh.CreateMesh(4);
-	_sineWaveMesh.SetPositionAttribute(_billboard.GetPositions(), GL_STATIC_DRAW, 0);
-	_sineWaveMesh.SetColorAttribute(_billboard.GetColors(), GL_STATIC_DRAW, 1);
-	_sineWaveMesh.SetIndices(_billboard.GetIndices(), GL_STATIC_DRAW);
-
+	_billboard.SetType(1);
 	_SineWaveShaderProgram.CreateProgram();
 	_SineWaveShaderProgram.Activate();
 	_SineWaveShaderProgram.AttachShader("Billboard.vert", GL_VERTEX_SHADER);
 	_SineWaveShaderProgram.AttachShader("Default.frag", GL_FRAGMENT_SHADER);
 	_SineWaveShaderProgram.SetAttribute(0, "VertexPosition");
+	//no necesitamos color, cambiar después
 	_SineWaveShaderProgram.SetAttribute(1, "VertexColor");
 	_SineWaveShaderProgram.LinkProgram();
 	_SineWaveShaderProgram.Deactivate();
@@ -46,33 +42,6 @@ void Initialize()
 
 	_camera.SetPosition(0.0f, 0.0f, -8.0f);
 	_camera.SetRotation(-20.0f, 0.0f, 0.0f);
-
-	glm::vec3 translations[1000];
-	int index = 0;
-	GLfloat offset = 1.0f;
-	for (GLint z = -10; z < 10; z += 2) {
-		for (GLint y = -10; y < 10; y += 2)
-		{
-			for (GLint x = -10; x < 10; x += 2)
-			{
-				glm::vec3 translation;
-				translation.x = (GLfloat)x / 10.0f + offset;
-				translation.y = (GLfloat)y / 10.0f + offset;
-				translation.z = (GLfloat)z / 10.0f + offset;
-				translations[index++] = translation;
-			}
-		}
-	}
-	_SineWaveShaderProgram.Activate();
-	for (GLuint i = 0; i < 1000; i++)
-	{
-		std::stringstream _ss;
-		std::string _index;
-		_ss << i;
-		_index = _ss.str();
-		_SineWaveShaderProgram.SetUniformf("offsets[" + _index + "]", translations[i].x, translations[i].y, translations[i].z);
-	}
-	_SineWaveShaderProgram.Deactivate();
 }
 
 void Idle()
@@ -102,17 +71,8 @@ void GameLoop()
 		_SineWaveShaderProgram.SetUniformMatrix("ProjectionMatrix", _camera.GetProjectionMatrix());
 		_SineWaveShaderProgram.SetUniformMatrix("ViewMatrix", _camera.GetViewMatrix());
 		_SineWaveShaderProgram.SetUniformMatrix("ModelMatrix", _SineWaveTransform.GetModelMatrix());
-		_sineWaveMesh.Draw(GL_TRIANGLES);
 		_SineWaveTransform.SetPosition(i+5,-time*2,0.0f);
 
-		//Tanda 2
-		_SineWaveShaderProgram.SetUniformMatrix("mvpMatrix", _camera.GetViewProjection()*_SineWaveTransform.GetModelMatrix());
-		_SineWaveShaderProgram.SetUniformMatrix("ModelViewMatrix", _camera.GetViewMatrix()*_SineWaveTransform.GetModelMatrix());
-		_SineWaveShaderProgram.SetUniformMatrix("ProjectionMatrix", _camera.GetProjectionMatrix());
-		_SineWaveShaderProgram.SetUniformMatrix("ViewMatrix", _camera.GetViewMatrix());
-		_SineWaveShaderProgram.SetUniformMatrix("ModelMatrix", _SineWaveTransform.GetModelMatrix());
-		_sineWaveMesh.Draw(GL_TRIANGLES);
-		_SineWaveTransform.SetPosition(i +5, -time*5 + 5, 0.0f);
 	}
 	
 

@@ -129,6 +129,7 @@
     <ClCompile Include="InputFile.cpp" />
     <ClCompile Include="Main.cpp" />
     <ClCompile Include="Mesh.cpp" />
+    <ClCompile Include="ParticleSystem.cpp" />
     <ClCompile Include="Shader.cpp" />
     <ClCompile Include="ShaderProgram.cpp" />
     <ClCompile Include="Texture2D.cpp" />
@@ -155,16 +156,16 @@
     <ClInclude Include="Camera.h" />
     <ClInclude Include="InputFile.h" />
     <ClInclude Include="Mesh.h" />
+    <ClInclude Include="ParticleSystem.h" />
     <ClInclude Include="Shader.h" />
     <ClInclude Include="ShaderProgram.h" />
     <ClInclude Include="Texture2D.h" />
     <ClInclude Include="Transform.h" />
   </ItemGroup>
   <ItemGroup>
-    <Image Include="..\..\..\Visual Studio 2015\Projects\201711-TC3022-2-master\201711-TC3022-2\lluvia.png" />
-    <Image Include="..\..\..\Visual Studio 2015\Projects\201711-TC3022-2-master\201711-TC3022-2\nieve.png" />
-    <Image Include="..\..\..\Visual Studio 2015\Projects\201711-TC3022-2-master\201711-TC3022-2\polvo.png" />
     <Image Include="heighmap.jpg" />
+    <Image Include="lluvia.gif" />
+    <Image Include="nieve.png" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
