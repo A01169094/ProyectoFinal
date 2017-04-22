@@ -14,20 +14,23 @@
 class Billboard
 {
 private:
-	std::vector<glm::vec3> positions;
-	std::vector<glm::vec3> colors;
-	std::vector<glm::vec3> particlePosition;
-	std::vector<glm::vec3> direction;
-	std::vector<unsigned int> indices;
+	std::vector<glm::vec3> _initialPositions;
+	Transform _transform;
+	glm::vec3 _direction;
+	int _life;
+	float _speed;
+	bool _isDrawn;
+	
 public:
 	Billboard();
-	Billboard(int type);
-	void SetColors(float r, float g, float b);
-	void SetParticlePosition();
-	std::vector<glm::vec3> GetPositions();
-	std::vector<glm::vec3> GetColors();
-	std::vector<glm::vec3> GetParticlePosition();
-	std::vector<unsigned int> GetIndices();
+	void ChangeDirection(glm::vec3 direction);
+	void ChangeSpeed(float speed);
+	void UpdateLife();
+	void ChangeDrawValue(bool value);
+	bool isDrawn();
+	int GetLife();
+	void SetLife(int life);
+	void SetPosition(float x, float y, float z);
 	~Billboard();
 };
 

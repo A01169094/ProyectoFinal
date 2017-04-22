@@ -1,88 +1,52 @@
 #include "Billboard.h"
-
-
-
-Billboard::Billboard()
-{
-	colors.push_back(glm::vec3(1.0f, 1.0f, 1.0f));
-	colors.push_back(glm::vec3(1.0f, 1.0f, 1.0f));
-	colors.push_back(glm::vec3(1.0f, 1.0f, 1.0f));
-	colors.push_back(glm::vec3(1.0f, 1.0f, 1.0f));
-
-	positions.push_back(glm::vec3(-1.0f, -1.0f, 0.0f));
-	positions.push_back(glm::vec3(1.0f, -1.0f, 0.0f));
-	positions.push_back(glm::vec3(1.0f, 1.0f, 0.0f));
-	positions.push_back(glm::vec3(-1.0f, 1.0f, 0.0f));
-
-	//particlePosition.push_back(glm::vec3(0.0f, 0.0f, 0.0f));
-
-	indices = { 0,1,2,0,2,3 };
+Billboard::Billboard() {
+	_speed = 1.0f;
+	//kien zabe quanthoo
+	_life = 100;
+	_transform.SetPosition(float(rand() % 20 + -10), 10.0f, float(rand() % 20 + -10));
+	_direction = glm::vec3(0.0f, -1.0f, 0.0f);
+	_isDrawn = false;
 }
 
-Billboard::Billboard(int type)
+void Billboard::ChangeDirection(glm::vec3 direction)
 {
-	Texture2D _textura;
-	//en cuanto a lluvia y nieve no creo que sea necesario mover la y, porque si queda que -0.5 o algo así entonces se detiene o como? si sigue derecho pues también da igual
-	//hay que hacer aquí un shaderprogram??
-	//lluvia
-	if (type == 1) {
-		direction.push_back(glm::vec3(float(rand() % 1), -1.0f, 0.0f));
-		_textura.LoadTexture("lluvia.png");
-		glActiveTexture(GL_TEXTURE0);
-		_textura.Bind();
-	}
-	//nieve
-	if (type == 2) {
-		direction.push_back(glm::vec3(float(rand() % 1), -1.0f, 0.0f));
-		_textura.LoadTexture("nieve.png");
-		glActiveTexture(GL_TEXTURE0);
-		_textura.Bind();
-	}
-	//polvo
-	if (type == 3) {
-		direction.push_back(glm::vec3(float(rand() % 1), float(rand() % 1), 0.0f));
-		_textura.LoadTexture("polvo.png");
-		glActiveTexture(GL_TEXTURE0);
-		_textura.Bind();
-	}
-	glActiveTexture(GL_TEXTURE0);
-	_textura.Unbind();
+	_direction = direction;
 }
 
-void Billboard::SetParticlePosition()
+void Billboard::ChangeSpeed(float speed)
 {
-
+	_speed = speed;
 }
 
-void Billboard::SetColors(float r, float g, float b)
+void Billboard::UpdateLife()
 {
-	colors.push_back(glm::vec3(r, g, b));
-	colors.push_back(glm::vec3(r, g, b));
-	colors.push_back(glm::vec3(r, g, b));
-	colors.push_back(glm::vec3(r, g, b));
+	_life--;
 }
 
-
-std::vector<glm::vec3> Billboard::GetPositions()
+void Billboard::ChangeDrawValue(bool value)
 {
-	return positions;
+	_isDrawn = value;
 }
 
-std::vector<glm::vec3> Billboard::GetColors()
+bool Billboard::isDrawn()
 {
-	return colors;
+	return _isDrawn;
 }
 
-std::vector<glm::vec3> Billboard::GetParticlePosition()
+int Billboard::GetLife()
 {
-	return particlePosition;
+	return _life;
 }
 
-std::vector<unsigned int> Billboard::GetIndices()
+void Billboard::SetLife(int life)
 {
-	return indices;
+	_life = life;
 }
 
+void Billboard::SetPosition(float x, float y, float z)
+{
+	_transform.SetPosition(x, y, z);
+}
 
 Billboard::~Billboard()
 {
