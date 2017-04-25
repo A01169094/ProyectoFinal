@@ -11,11 +11,15 @@ public:
 	~ParticleSystem();
 	void Create();
 	void SetType(int type);
+	void ActivateTexture();
+	void DeactivateTexture();
 	void UpdateLife();
 	void Revive();
 	void ChangeSpeed(float speed);
 	void ChangeDirection();
 	void Draw(int number);
+	void PruebaDraw(int bill);
+	std::vector<Billboard> GetBillboards();
 private:
 	int _limit;
 	Mesh _mesh;

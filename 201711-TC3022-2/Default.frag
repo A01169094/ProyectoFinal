@@ -1,10 +1,13 @@
 #version 330
 
-in vec3 InterpolatedColor;
+in vec2 InterpolatedTexCoord;
 
 out vec4 FragColor;
 
+uniform sampler2D DiffuseTexture;
+
 void main()
 {
-	FragColor = vec4(InterpolatedColor, 1.0f);
+	FragColor = texture2D(DiffuseTexture, InterpolatedTexCoord);
+
 }

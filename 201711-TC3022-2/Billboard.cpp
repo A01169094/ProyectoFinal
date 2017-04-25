@@ -48,6 +48,16 @@ void Billboard::SetPosition(float x, float y, float z)
 	_transform.SetPosition(x, y, z);
 }
 
+glm::mat4 Billboard::GetModelMatrix()
+{
+	return _transform.GetModelMatrix();
+}
+
+Transform Billboard::GetTransform()
+{
+	return _transform;
+}
+
 Billboard::~Billboard()
 {
 }

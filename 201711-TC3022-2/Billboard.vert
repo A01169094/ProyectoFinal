@@ -1,8 +1,8 @@
 #version 330
 in vec3 VertexPosition;
-in vec3 VertexColor;
+in vec2 VertexTexCoord;
 
-out vec3 InterpolatedColor;
+out vec2 InterpolatedTexCoord;
 
 uniform mat4 mvpMatrix;
 uniform mat4 ModelViewMatrix;
@@ -28,7 +28,7 @@ void main()
   modelView[2][2] = 1.0f; 
   
   vec4 P = modelView * vec4(VertexPosition,1.0f);
-  gl_Position = ProjectionMatrix * P;
-
-  InterpolatedColor = VertexColor;
+  
+  InterpolatedTexCoord = VertexTexCoord;
+  gl_Position = mvpMatrix * vec4(VertexPosition, 1.0f);
 }

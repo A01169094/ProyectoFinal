@@ -14,34 +14,46 @@ Pedro Ángel González González A01169094
 #include "Texture2D.h"
 #include "Transform.h"
 #include "Billboard.h"
+#include "ParticleSystem.h"
 #include <iostream>
 #include <vector>
 #include <sstream>
 
 //Mesh _sineWaveMesh;
 ShaderProgram _SineWaveShaderProgram;
-Billboard _billboard;
 Transform _SineWaveTransform;
+std::vector<Billboard> _billboards;
+ParticleSystem _system;
 
 Camera _camera;
 float time;
 
 void Initialize()
 {
-	_billboard.SetType(1);
+	_system.Create();
+	_billboards = _system.GetBillboards();
+
 	_SineWaveShaderProgram.CreateProgram();
 	_SineWaveShaderProgram.Activate();
 	_SineWaveShaderProgram.AttachShader("Billboard.vert", GL_VERTEX_SHADER);
 	_SineWaveShaderProgram.AttachShader("Default.frag", GL_FRAGMENT_SHADER);
 	_SineWaveShaderProgram.SetAttribute(0, "VertexPosition");
-	//no necesitamos color, cambiar después
-	_SineWaveShaderProgram.SetAttribute(1, "VertexColor");
+	_SineWaveShaderProgram.SetAttribute(1, "VertexTexCoord");
+
 	_SineWaveShaderProgram.LinkProgram();
 	_SineWaveShaderProgram.Deactivate();
 
+	_camera.SetPerspective(1.0f, 1000.0f, 0.0f, 1.0f);
+	_camera.SetPosition(0.0f, 0.0f, -10.0f);
 
-	_camera.SetPosition(0.0f, 0.0f, -8.0f);
-	_camera.SetRotation(-20.0f, 0.0f, 0.0f);
+	_system.SetType(1);
+
+	_SineWaveShaderProgram.Activate();
+	_SineWaveShaderProgram.SetUniformi("DiffuseTexture", 0);
+	_SineWaveShaderProgram.Deactivate();
+
+	time = 0.0f;
+
 }
 
 void Idle()
@@ -61,20 +73,25 @@ void GameLoop()
 	time += 0.0005f;
 	if (time >= 360) {
 		time = 0;
+
 	}
 
 	//Así más o menos se harían como por tanta (habría que modificar el espaciado y caída en x,y)
-	for (int i = 0; i < 10; i++) {
+	for (int i = 0; i <_billboards.size(); i++) {
+		_system.ActivateTexture();
+
 		//Tanda 1
-		_SineWaveShaderProgram.SetUniformMatrix("mvpMatrix", _camera.GetViewProjection()*_SineWaveTransform.GetModelMatrix());
-		_SineWaveShaderProgram.SetUniformMatrix("ModelViewMatrix", _camera.GetViewMatrix()*_SineWaveTransform.GetModelMatrix());
+		_SineWaveShaderProgram.SetUniformMatrix("mvpMatrix", _camera.GetViewProjection()*_billboards[i].GetModelMatrix());
+		_SineWaveShaderProgram.SetUniformMatrix("ModelViewMatrix", _camera.GetViewMatrix()*_billboards[i].GetModelMatrix());
 		_SineWaveShaderProgram.SetUniformMatrix("ProjectionMatrix", _camera.GetProjectionMatrix());
 		_SineWaveShaderProgram.SetUniformMatrix("ViewMatrix", _camera.GetViewMatrix());
-		_SineWaveShaderProgram.SetUniformMatrix("ModelMatrix", _SineWaveTransform.GetModelMatrix());
-		_SineWaveTransform.SetPosition(i+5,-time*2,0.0f);
+		_SineWaveShaderProgram.SetUniformMatrix("ModelMatrix", _billboards[i].GetTransform().GetModelMatrix());
+		_billboards[i].GetTransform().SetPosition(0.0f,time,0.0f);
+		_system.PruebaDraw(i);
 
-	}
-	
+		_system.DeactivateTexture();
+
+	}	
 
 	_SineWaveShaderProgram.Deactivate();
 
