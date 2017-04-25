@@ -23,15 +23,15 @@ Pedro Ángel González González A01169094
 ShaderProgram _SineWaveShaderProgram;
 Transform _SineWaveTransform;
 std::vector<Billboard> _billboards;
-ParticleSystem _system;
+ParticleSystem _rainSystem;
 
 Camera _camera;
 float time;
 
 void Initialize()
 {
-	_system.Create();
-	_billboards = _system.GetBillboards();
+	_rainSystem.Create();
+	_billboards = _rainSystem.GetBillboards();
 
 	_SineWaveShaderProgram.CreateProgram();
 	_SineWaveShaderProgram.Activate();
@@ -46,7 +46,7 @@ void Initialize()
 	_camera.SetPerspective(1.0f, 1000.0f, 0.0f, 1.0f);
 	_camera.SetPosition(0.0f, 0.0f, -10.0f);
 
-	_system.SetType(1);
+	_rainSystem.SetType(1);
 
 	_SineWaveShaderProgram.Activate();
 	_SineWaveShaderProgram.SetUniformi("DiffuseTexture", 0);
@@ -76,19 +76,17 @@ void GameLoop()
 
 	}
 
+	_rainSystem.Move();
+
 	//Así más o menos se harían como por tanta (habría que modificar el espaciado y caída en x,y)
 	for (int i = 0; i <_billboards.size(); i++) {
-		_system.ActivateTexture();
+		_rainSystem.ActivateTexture();
 
 		//Tanda 1
-		_SineWaveShaderProgram.SetUniformMatrix("mvpMatrix", _camera.GetViewProjection()*_billboards[i].GetModelMatrix());
 		_SineWaveShaderProgram.SetUniformMatrix("ModelViewMatrix", _camera.GetViewMatrix()*_billboards[i].GetModelMatrix());
 		_SineWaveShaderProgram.SetUniformMatrix("ProjectionMatrix", _camera.GetProjectionMatrix());
-		_SineWaveShaderProgram.SetUniformMatrix("ViewMatrix", _camera.GetViewMatrix());
-		_SineWaveShaderProgram.SetUniformMatrix("ModelMatrix", _billboards[i].GetTransform().GetModelMatrix());
-		_system.PruebaDraw(i);
-
-		_system.DeactivateTexture();
+		_rainSystem.PruebaDraw(i);
+		_rainSystem.DeactivateTexture();
 
 	}	
 

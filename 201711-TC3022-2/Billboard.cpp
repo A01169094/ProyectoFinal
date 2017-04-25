@@ -18,6 +18,10 @@ void Billboard::ChangeSpeed(float speed)
 	_speed = speed;
 }
 
+void Billboard::Move() {
+	_transform.Translate(_direction.x, _direction.y, _direction.z, false);
+}
+
 void Billboard::UpdateLife()
 {
 	_life--;

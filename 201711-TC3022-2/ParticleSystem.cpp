@@ -106,6 +106,13 @@ void ParticleSystem::ChangeDirection()
 	}
 }
 
+void ParticleSystem::Move()
+{
+	for (int i = 0; _billboards.size(); i++) {
+			_billboards[i].Move();
+		}
+}
+
 void ParticleSystem::Draw(int number)
 {
 	for (int i = _limit-1; i >= number; i--) {

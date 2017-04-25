@@ -25,6 +25,7 @@ public:
 	Billboard();
 	void ChangeDirection(glm::vec3 direction);
 	void ChangeSpeed(float speed);
+	void Move();
 	void UpdateLife();
 	void ChangeDrawValue(bool value);
 	bool isDrawn();

@@ -4,11 +4,8 @@ in vec2 VertexTexCoord;
 
 out vec2 InterpolatedTexCoord;
 
-uniform mat4 mvpMatrix;
 uniform mat4 ModelViewMatrix;
 uniform mat4 ProjectionMatrix;
-uniform mat4 ViewMatrix;
-uniform mat4 ModelMatrix;
 
 void main()
 {
