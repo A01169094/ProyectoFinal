@@ -108,7 +108,7 @@ void ParticleSystem::ChangeDirection()
 
 void ParticleSystem::Move()
 {
-	for (int i = 0; _billboards.size(); i++) {
+	for (int i = 0;i< _billboards.size(); i++) {
 			_billboards[i].Move();
 		}
 }
@@ -125,12 +125,12 @@ void ParticleSystem::Draw(int number)
 	}
 }
 
-void ParticleSystem::PruebaDraw(int bill)
+/*void ParticleSystem::PruebaDraw(int bill)
 {
 		_billboards[bill].ChangeDrawValue(true);
 		//Aquí tenemos que mandar todo a los shaders en uniforms (checa el main): mvp modelview projection view model por cada transform de cada billboard
 		_mesh.Draw(GL_TRIANGLES);
-}
+}*/
 
 std::vector<Billboard> ParticleSystem::GetBillboards()
 {

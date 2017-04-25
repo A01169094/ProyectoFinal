@@ -4,7 +4,7 @@ Billboard::Billboard() {
 	//kien zabe quanthoo
 	_life = 100;
 	_transform.SetPosition(float(rand() % 20 + -10), 10.0f, float(rand() % 20 + -10));
-	_direction = glm::vec3(0.0f, -1.0f, 0.0f);
+	_direction = glm::vec3(0.0f, -0.001f, 0.0f);
 	_isDrawn = false;
 }
 
@@ -19,7 +19,7 @@ void Billboard::ChangeSpeed(float speed)
 }
 
 void Billboard::Move() {
-	_transform.Translate(_direction.x, _direction.y, _direction.z, false);
+	_transform.Translate(_direction.x, _direction.y, _direction.z, true);
 }
 
 void Billboard::UpdateLife()

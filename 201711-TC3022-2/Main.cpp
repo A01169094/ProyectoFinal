@@ -73,22 +73,23 @@ void GameLoop()
 	time += 0.0005f;
 	if (time >= 360) {
 		time = 0;
-
 	}
+	
+	//_rainSystem.Move();
 
-	_rainSystem.Move();
 
 	//Así más o menos se harían como por tanta (habría que modificar el espaciado y caída en x,y)
-	for (int i = 0; i <_billboards.size(); i++) {
+	for (int i = 0; i < _billboards.size(); i++) {
 		_rainSystem.ActivateTexture();
 
 		//Tanda 1
 		_SineWaveShaderProgram.SetUniformMatrix("ModelViewMatrix", _camera.GetViewMatrix()*_billboards[i].GetModelMatrix());
 		_SineWaveShaderProgram.SetUniformMatrix("ProjectionMatrix", _camera.GetProjectionMatrix());
-		_rainSystem.PruebaDraw(i);
+		_rainSystem.Draw(i);
 		_rainSystem.DeactivateTexture();
+		_billboards[i].Move();
 
-	}	
+	}
 
 	_SineWaveShaderProgram.Deactivate();
 
