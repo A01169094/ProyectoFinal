@@ -30,5 +30,5 @@ void main()
   vec4 P = modelView * vec4(VertexPosition,1.0f);
   
   InterpolatedTexCoord = VertexTexCoord;
-  gl_Position = mvpMatrix * vec4(VertexPosition, 1.0f);
+  gl_Position = ProjectionMatrix * P;
 }

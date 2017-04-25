@@ -86,7 +86,6 @@ void GameLoop()
 		_SineWaveShaderProgram.SetUniformMatrix("ProjectionMatrix", _camera.GetProjectionMatrix());
 		_SineWaveShaderProgram.SetUniformMatrix("ViewMatrix", _camera.GetViewMatrix());
 		_SineWaveShaderProgram.SetUniformMatrix("ModelMatrix", _billboards[i].GetTransform().GetModelMatrix());
-		_billboards[i].GetTransform().SetPosition(0.0f,time,0.0f);
 		_system.PruebaDraw(i);
 
 		_system.DeactivateTexture();
