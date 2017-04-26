@@ -8,9 +8,14 @@ Billboard::Billboard() {
 	_isDrawn = false;
 }
 
-void Billboard::ChangeDirection(glm::vec3 direction)
+void Billboard::ChangeDirection(int type)
 {
-	_direction = direction;
+	if (type == 2) {
+			_direction= glm::vec3(((float(rand() % 3)) - 1.0f)*.1f, .01f, ((float(rand() % 3)) - 1.0f)*.1f);
+		}
+	if (type == 3) {
+			_direction=glm::vec3(((float(rand()%3))-1.0f)*.1f, ((float(rand() % 3)) - 1.0f)*.1f, ((float(rand() % 3)) - 1.0f)*.1f);
+		}
 }
 
 void Billboard::ChangeSpeed(float speed)

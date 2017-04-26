@@ -16,8 +16,6 @@ public:
 	void UpdateLife();
 	void Revive();
 	void ChangeSpeed(float speed);
-	void ChangeDirection();
-	void Move();
 	void Draw(int number);
 	void PruebaDraw(int bill);
 	std::vector<Billboard> GetBillboards();

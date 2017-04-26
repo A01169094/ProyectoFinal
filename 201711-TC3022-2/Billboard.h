@@ -23,7 +23,7 @@ private:
 	
 public:
 	Billboard();
-	void ChangeDirection(glm::vec3 direction);
+	void ChangeDirection(int type);
 	void ChangeSpeed(float speed);
 	void Move();
 	void UpdateLife();

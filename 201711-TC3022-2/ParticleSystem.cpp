@@ -18,10 +18,10 @@ void ParticleSystem::Create() {
 		_billboards.push_back(billboard);
 	}
 
-	_vertices.push_back(glm::vec3(-1.0f, -1.0f, 0.0f));
-	_vertices.push_back(glm::vec3(1.0f, -1.0f, 0.0f));
-	_vertices.push_back(glm::vec3(1.0f, 1.0f, 0.0f));
-	_vertices.push_back(glm::vec3(-1.0f, 1.0f, 0.0f));
+	_vertices.push_back(glm::vec3(-0.5f, -0.5f, 0.0f));
+	_vertices.push_back(glm::vec3(0.5f, -0.5f, 0.0f));
+	_vertices.push_back(glm::vec3(0.5f, 0.5f, 0.0f));
+	_vertices.push_back(glm::vec3(-0.5f, 0.5f, 0.0f));
 
 	std::vector<glm::vec2> texCoords;
 	texCoords.push_back(glm::vec2(0.0f, 0.0f));
@@ -89,29 +89,11 @@ void ParticleSystem::Revive()
 
 void ParticleSystem::ChangeSpeed(float speed)
 {
-	for (int i = 0; _billboards.size(); i++) {
+	for (int i = 0; i<_billboards.size(); i++) {
 		_billboards[i].ChangeSpeed(speed);
 	}
 }
 
-void ParticleSystem::ChangeDirection()
-{
-	for (int i = 0; _billboards.size(); i++) {
-		if (_type == 2) {
-			_billboards[i].ChangeDirection(glm::vec3(float(rand() % 2 + -1), -1.0f, float(rand() % 2 + -1)));
-		}
-		if (_type == 3) {
-			_billboards[i].ChangeDirection(glm::vec3(float(rand() % 2 + -1), float(rand() % 2 + -1), float(rand() % 2 + -1)));
-		}
-	}
-}
-
-void ParticleSystem::Move()
-{
-	for (int i = 0;i< _billboards.size(); i++) {
-			_billboards[i].Move();
-		}
-}
 
 void ParticleSystem::Draw(int number)
 {

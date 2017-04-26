@@ -46,7 +46,7 @@ void Initialize()
 	_camera.SetPerspective(1.0f, 1000.0f, 0.0f, 1.0f);
 	_camera.SetPosition(0.0f, 0.0f, -10.0f);
 
-	_rainSystem.SetType(1);
+	_rainSystem.SetType(3);
 
 	_SineWaveShaderProgram.Activate();
 	_SineWaveShaderProgram.SetUniformi("DiffuseTexture", 0);
@@ -75,8 +75,6 @@ void GameLoop()
 		time = 0;
 	}
 	
-	//_rainSystem.Move();
-	_rainSystem.ChangeDirection();
 
 	//Así más o menos se harían como por tanta (habría que modificar el espaciado y caída en x,y)
 	for (int i = 0; i < _billboards.size(); i++) {
@@ -87,6 +85,7 @@ void GameLoop()
 		_SineWaveShaderProgram.SetUniformMatrix("ProjectionMatrix", _camera.GetProjectionMatrix());
 		_rainSystem.Draw(i);
 		_rainSystem.DeactivateTexture();
+		_billboards[i].ChangeDirection(3);
 		_billboards[i].Move();
 
 	}
