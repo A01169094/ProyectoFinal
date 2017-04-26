@@ -76,7 +76,7 @@ void GameLoop()
 	}
 	
 	//_rainSystem.Move();
-
+	_rainSystem.ChangeDirection();
 
 	//Así más o menos se harían como por tanta (habría que modificar el espaciado y caída en x,y)
 	for (int i = 0; i < _billboards.size(); i++) {
