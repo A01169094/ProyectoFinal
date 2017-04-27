@@ -4,7 +4,7 @@ Pedro Ángel González González A01169094
 ********************************************
 */
 
-#include <GL/glew.h>
+#include <GL/glew.h>SineWaveShaderProgram
 #include <GL/freeglut.h>
 #include <glm/glm.hpp>
 #include <IL/il.h>
@@ -20,40 +20,39 @@ Pedro Ángel González González A01169094
 #include <sstream>
 
 //Mesh _sineWaveMesh;
-ShaderProgram _SineWaveShaderProgram;
-Transform _SineWaveTransform;
+ShaderProgram _shaderProgram;
 std::vector<Billboard> _billboards;
-ParticleSystem _rainSystem;
-
+ParticleSystem _particleSystem;
+int _numberDrawn;
+int _frameNumber;
 Camera _camera;
-float time;
 
 void Initialize()
 {
-	_rainSystem.Create();
-	_billboards = _rainSystem.GetBillboards();
+	_particleSystem.Create();
+	
+	_shaderProgram.CreateProgram();
+	_shaderProgram.Activate();
+	_shaderProgram.AttachShader("Billboard.vert", GL_VERTEX_SHADER);
+	_shaderProgram.AttachShader("Default.frag", GL_FRAGMENT_SHADER);
+	_shaderProgram.SetAttribute(0, "VertexPosition");
+	_shaderProgram.SetAttribute(1, "VertexTexCoord");
 
-	_SineWaveShaderProgram.CreateProgram();
-	_SineWaveShaderProgram.Activate();
-	_SineWaveShaderProgram.AttachShader("Billboard.vert", GL_VERTEX_SHADER);
-	_SineWaveShaderProgram.AttachShader("Default.frag", GL_FRAGMENT_SHADER);
-	_SineWaveShaderProgram.SetAttribute(0, "VertexPosition");
-	_SineWaveShaderProgram.SetAttribute(1, "VertexTexCoord");
-
-	_SineWaveShaderProgram.LinkProgram();
-	_SineWaveShaderProgram.Deactivate();
+	_shaderProgram.LinkProgram();
+	_shaderProgram.Deactivate();
 
 	_camera.SetPerspective(1.0f, 1000.0f, 0.0f, 1.0f);
 	_camera.SetPosition(0.0f, 0.0f, -10.0f);
 
-	_rainSystem.SetType(3);
+	_particleSystem.SetType(1);
+	_billboards = _particleSystem.GetBillboards();
 
-	_SineWaveShaderProgram.Activate();
-	_SineWaveShaderProgram.SetUniformi("DiffuseTexture", 0);
-	_SineWaveShaderProgram.Deactivate();
+	_shaderProgram.Activate();
+	_shaderProgram.SetUniformi("DiffuseTexture", 0);
+	_shaderProgram.Deactivate();
 
-	time = 0.0f;
-
+	_numberDrawn = 3;
+	_frameNumber = 0;
 }
 
 void Idle()
@@ -68,34 +67,33 @@ void GameLoop()
 	// y la información de profundidad.
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
-	_SineWaveShaderProgram.Activate();
-
-	time += 0.0005f;
-	if (time >= 360) {
-		time = 0;
-	}
-	
+	_shaderProgram.Activate();
 
 	//Así más o menos se harían como por tanta (habría que modificar el espaciado y caída en x,y)
-	for (int i = 0; i < _billboards.size(); i++) {
-		_rainSystem.ActivateTexture();
+	for (int i = 0; i < _numberDrawn; i++) {
+		_particleSystem.ActivateTexture();
 
 		//Tanda 1
-		_SineWaveShaderProgram.SetUniformMatrix("ModelViewMatrix", _camera.GetViewMatrix()*_billboards[i].GetModelMatrix());
-		_SineWaveShaderProgram.SetUniformMatrix("ProjectionMatrix", _camera.GetProjectionMatrix());
-		_rainSystem.Draw(i);
-		_rainSystem.DeactivateTexture();
-		_billboards[i].ChangeDirection(3);
+		_shaderProgram.SetUniformMatrix("ModelViewMatrix", _camera.GetViewMatrix()*_billboards[i].GetModelMatrix());
+		_shaderProgram.SetUniformMatrix("ProjectionMatrix", _camera.GetProjectionMatrix());
+		_particleSystem.Draw(i);
+		_particleSystem.DeactivateTexture();
+		_billboards[i].ChangeDirection(1);
 		_billboards[i].Move();
 
 	}
 
-	_SineWaveShaderProgram.Deactivate();
-
-
-
+	_shaderProgram.Deactivate();
+	
 	// Cambiar el buffer actual
 	glutSwapBuffers();
+	_frameNumber++;
+	if (_frameNumber == 12) {
+		if (_numberDrawn <= 96) {
+			_numberDrawn += 3;
+			_frameNumber = 0;
+		}
+	}
 }
 
 void Keyboard(unsigned char key, int y, int z)
