@@ -164,8 +164,9 @@
   </ItemGroup>
   <ItemGroup>
     <Image Include="heighmap.jpg" />
-    <Image Include="lluvia.gif" />
+    <Image Include="lluvia.png" />
     <Image Include="nieve.png" />
+    <Image Include="polvo.png" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

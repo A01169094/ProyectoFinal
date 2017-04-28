@@ -207,7 +207,8 @@ int main(int argc, char* argv[])
 	// Configuramos OpenGL. Este es el color
 	// por default del buffer de color en el framebuffer.
 	glClearColor(1.0f, 1.0f, 0.5f, 1.0f);
-	glEnable(GL_DEPTH_TEST);
+	glEnable(GL_DEPTH);
+	//glEnable(GL_DEPTH_TEST);
 	glEnable(GL_CULL_FACE);
 	glDisable(GL_PROGRAM_POINT_SIZE);
 	glPointSize(5);

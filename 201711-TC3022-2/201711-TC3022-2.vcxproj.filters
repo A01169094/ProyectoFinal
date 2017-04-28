@@ -126,10 +126,13 @@
     <Image Include="heighmap.jpg">
       <Filter>Resource Files</Filter>
     </Image>
-    <Image Include="lluvia.gif">
+    <Image Include="nieve.png">
       <Filter>Resource Files</Filter>
     </Image>
-    <Image Include="nieve.png">
+    <Image Include="polvo.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="lluvia.png">
       <Filter>Resource Files</Filter>
     </Image>
   </ItemGroup>
