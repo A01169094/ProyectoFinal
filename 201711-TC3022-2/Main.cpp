@@ -21,17 +21,17 @@ Pedro Ángel González González A01169094
 
 //Mesh _sineWaveMesh;
 ShaderProgram _SineWaveShaderProgram;
-Transform _SineWaveTransform;
 std::vector<Billboard> _billboards;
-ParticleSystem _rainSystem;
+ParticleSystem _particleSystem;
+int _numberDrawn;
+int _frameNumber;
 
 Camera _camera;
 float time;
 
 void Initialize()
 {
-	_rainSystem.Create();
-	_billboards = _rainSystem.GetBillboards();
+	_particleSystem.Create();
 
 	_SineWaveShaderProgram.CreateProgram();
 	_SineWaveShaderProgram.Activate();
@@ -46,13 +46,17 @@ void Initialize()
 	_camera.SetPerspective(1.0f, 1000.0f, 0.0f, 1.0f);
 	_camera.SetPosition(0.0f, 0.0f, -10.0f);
 
-	_rainSystem.SetType(3);
+	_particleSystem.SetType(1);
+	_billboards = _particleSystem.GetBillboards();
+
 
 	_SineWaveShaderProgram.Activate();
 	_SineWaveShaderProgram.SetUniformi("DiffuseTexture", 0);
 	_SineWaveShaderProgram.Deactivate();
 
-	time = 0.0f;
+	_numberDrawn = 0;
+	_frameNumber = 0;
+
 
 }
 
@@ -63,6 +67,7 @@ void Idle()
 
 void GameLoop()
 {
+
 	// Siempre es recomendable borrar la información anterior del framebuffer.
 	// En este caso estamos borrando la información de color,
 	// y la información de profundidad.
@@ -70,22 +75,18 @@ void GameLoop()
 
 	_SineWaveShaderProgram.Activate();
 
-	time += 0.0005f;
-	if (time >= 360) {
-		time = 0;
-	}
 	
 
 	//Así más o menos se harían como por tanta (habría que modificar el espaciado y caída en x,y)
 	for (int i = 0; i < _billboards.size(); i++) {
-		_rainSystem.ActivateTexture();
+		_particleSystem.ActivateTexture();
 
 		//Tanda 1
 		_SineWaveShaderProgram.SetUniformMatrix("ModelViewMatrix", _camera.GetViewMatrix()*_billboards[i].GetModelMatrix());
 		_SineWaveShaderProgram.SetUniformMatrix("ProjectionMatrix", _camera.GetProjectionMatrix());
-		_rainSystem.Draw(i);
-		_rainSystem.DeactivateTexture();
-		_billboards[i].ChangeDirection(3);
+		_particleSystem.Draw(i);
+		_particleSystem.DeactivateTexture();
+		_billboards[i].ChangeDirection(1);
 		_billboards[i].Move();
 
 	}
@@ -96,6 +97,12 @@ void GameLoop()
 
 	// Cambiar el buffer actual
 	glutSwapBuffers();
+
+	_frameNumber++;
+	if (_frameNumber == 12) {
+		_numberDrawn+=3;
+		_frameNumber = 0;
+	}
 }
 
 void Keyboard(unsigned char key, int y, int z)
