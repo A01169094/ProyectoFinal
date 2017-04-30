@@ -32,6 +32,7 @@ public:
 	int GetLife();
 	void SetLife(int life);
 	void SetPosition(float x, float y, float z);
+	void SetScale(float scale);
 	glm::mat4 GetModelMatrix();
 	Transform GetTransform();
 	~Billboard();

@@ -1,6 +1,7 @@
 /*
 ********************************************
 Pedro Ángel González González A01169094
+Samantha López Xavier A01370070
 ********************************************
 */
 
@@ -71,6 +72,8 @@ void GameLoop()
 
 	//Así más o menos se harían como por tanta (habría que modificar el espaciado y caída en x,y)
 	for (int i = 0; i < _numberDrawn; i++) {
+		int life=_billboards[i].GetLife();
+
 		_particleSystem.ActivateTexture();
 
 		//Tanda 1
@@ -80,7 +83,7 @@ void GameLoop()
 		_particleSystem.DeactivateTexture();
 		_billboards[i].ChangeDirection(1);
 		_billboards[i].Move();
-
+		_billboards[i].SetLife(life--);
 	}
 
 	_shaderProgram.Deactivate();
@@ -94,6 +97,9 @@ void GameLoop()
 			_frameNumber = 0;
 		}
 	}
+	_particleSystem.Kill();
+	_particleSystem.Revive();
+	_particleSystem.UpdateLife();
 }
 
 void Keyboard(unsigned char key, int y, int z)

@@ -17,7 +17,7 @@ public:
 	void Revive();
 	void ChangeSpeed(float speed);
 	void Draw(int number);
-	void PruebaDraw(int bill);
+	void Kill();
 	std::vector<Billboard> GetBillboards();
 private:
 	int _limit;

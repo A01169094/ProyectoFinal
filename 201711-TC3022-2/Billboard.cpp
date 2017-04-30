@@ -2,7 +2,7 @@
 Billboard::Billboard() {
 	_speed = 1.0f;
 	//kien zabe quanthoo
-	_life = 100;
+	_life = 10;
 	_transform.SetPosition(float(rand() % 20 + -10), 10.0f, float(rand() % 20 + -10));
 	_direction = glm::vec3(0.0f, -0.01f, 0.0f);
 	_isDrawn = false;
@@ -55,6 +55,11 @@ void Billboard::SetLife(int life)
 void Billboard::SetPosition(float x, float y, float z)
 {
 	_transform.SetPosition(x, y, z);
+}
+
+void Billboard::SetScale(float scale)
+{
+	_transform.SetScale(scale);
 }
 
 glm::mat4 Billboard::GetModelMatrix()

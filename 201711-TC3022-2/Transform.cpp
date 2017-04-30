@@ -104,6 +104,12 @@ void Transform::SetScale(float x, float y, float z)
 	UpdateModelMatrixRotation();
 }
 
+void Transform::SetScale(float scale)
+{
+	_scale = glm::vec3(_scale+scale);
+	UpdateModelMatrixRotation();
+}
+
 void Transform::SetScale(glm::vec3 scale)
 {
 	_scale = scale;

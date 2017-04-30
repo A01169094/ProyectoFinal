@@ -23,6 +23,7 @@ public:
 	void SetRotation(glm::quat rotation);
 	void SetScale(float x, float y, float z);
 	void SetScale(glm::vec3 scale);
+	void SetScale(float scale);
 
 	void Translate(float x, float y, float z, bool world);
 	void MoveForward(float delta, bool world);
