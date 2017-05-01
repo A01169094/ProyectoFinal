@@ -2,19 +2,22 @@
 Billboard::Billboard() {
 	_speed = 1.0f;
 	//kien zabe quanthoo
-	_life = 400.0f;
-	_transform.SetPosition(float(rand() % 20 + -10), 10.0f, float(rand() % 20 + -10));
-	_direction = glm::vec3(0.0f, -0.01f, 0.0f);
+	_life = 200.0f;
+	_transform.SetPosition(float(rand() % 21 + -10), 10.0f, float(rand() % 21 + -10));
+	_direction = glm::vec3(0.0f, -0.1f, 0.0f);
 	_isDrawn = false;
 }
 
 void Billboard::ChangeDirection(int type)
 {
+	if (type == 1) {
+		_direction = glm::vec3(0.0f,-0.1f, 0.0f);
+	}
 	if (type == 2) {
-			_direction= glm::vec3(((float(rand() % 3)) - 1.0f)*.1f, .01f, ((float(rand() % 3)) - 1.0f)*.1f);
+			_direction= glm::vec3(((float(rand() % 2)) - 0.5f)*.1f, -0.03f, ((float(rand() % 2)) - 0.5f)*.1f);
 		}
 	if (type == 3) {
-			_direction=glm::vec3(((float(rand()%3))-1.0f)*.1f, ((float(rand() % 3)) - 1.0f)*.1f, ((float(rand() % 3)) - 1.0f)*.1f);
+			_direction=glm::vec3(((float(rand()%2))-0.5f)*.1f, ((float(rand() % 2)) - 0.5f)*.1f, ((float(rand() % 2)) - 0.5f)*.1f);
 		}
 }
 
@@ -29,7 +32,7 @@ void Billboard::Move() {
 
 void Billboard::UpdateLife()
 {
-	_life-=0.5f;
+	_life--;
 }
 
 void Billboard::ChangeDrawValue(bool value)
@@ -93,13 +96,19 @@ void Billboard::Revive(int type)
 			SetLife(200.f);
 		}
 		if (type == 2) {
-			SetLife(800.f);
+			SetLife(600.f);
 		}
 		if (type == 3) {
 			SetLife(1000.f);
 		}
 		SetScale(1.0f);
-		SetPosition(float(rand() % 20 + -10), 10.0f, float(rand() % 20 + -10));
-		ChangeDrawValue(true);
+		if ((type == 1) || (type == 2))
+		{
+			SetPosition(float(rand() % 21 + -10), float(rand() % 5 + 7), float(rand() % 21 + -10));
 		}
+		if (type == 3){
+			SetPosition(float(rand() % 21 + -10), float(rand() % 21 + -10), float(rand() % 21 + -10));
+	}
+		ChangeDrawValue(true);
+	}
 }
