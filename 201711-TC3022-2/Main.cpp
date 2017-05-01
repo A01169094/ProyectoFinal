@@ -119,28 +119,25 @@ void Keyboard(unsigned char key, int y, int z)
 	{
 		_type = 1;
 		_particleSystem.SetType(1);
-//		_billboards = _particleSystem.GetBillboards();
-		/*for (int i = 0; i < _billboards.size(); i++) {
-			_billboards[i].Revive(_type);
-		}*/
+		for (int i = 0; i < _billboards.size(); i++) {
+			_billboards[i].SetPosition(float(rand() % 21 + -10), float(rand() % 16 -5), float(rand() % 21 + -10));
+		}
 	}
 	if (key == '2')
 	{
 		_type = 2;
 		_particleSystem.SetType(2);
-		//_billboards = _particleSystem.GetBillboards();
-		/*for (int i = 0; i < _billboards.size(); i++) {
-			_billboards[i].Revive(_type);
-		}*/
+		for (int i = 0; i < _billboards.size(); i++) {
+			_billboards[i].SetPosition(float(rand() % 21 + -10), float(rand() % 21 + -10), float(rand() % 21 + -10));
+		}
 	}
 	if (key == '3')
 	{
 		_type = 3;
 		_particleSystem.SetType(3);
-		//_billboards = _particleSystem.GetBillboards();
-		/*for (int i = 0; i < _billboards.size(); i++) {
-			_billboards[i].Revive(_type);
-		}*/
+		for (int i = 0; i < _billboards.size(); i++) {
+			_billboards[i].SetPosition(float(rand() % 21 + -10), float(rand() % 21 + -10), float(rand() % 21 + -10));
+		}
 	}
 }
 
