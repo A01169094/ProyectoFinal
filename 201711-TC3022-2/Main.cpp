@@ -75,20 +75,18 @@ void GameLoop()
 
 	_shaderProgram.Activate();
 
-		//Aquí tenemos que mandar todo a los shaders en uniforms (checa el main): mvp modelview projection view model por cada transform de cada billboard
-	//Así más o menos se harían como por tanta (habría que modificar el espaciado y caída en x,y)
 	for (int i = 0; i < _numberDrawn; i++) {
 		_particleSystem.ActivateTexture();
-		//Tanda 1
-		_shaderProgram.SetUniformMatrix("ModelViewMatrix", _camera.GetViewMatrix()*_billboards[i].GetModelMatrix());
-		_shaderProgram.SetUniformMatrix("ProjectionMatrix", _camera.GetProjectionMatrix());
-		_particleSystem.Draw(i);
 		_billboards[i].ChangeDrawValue(true);
-		_particleSystem.DeactivateTexture();
 		_billboards[i].ChangeDirection(_type);
 		_billboards[i].Move();
+		_shaderProgram.SetUniformMatrix("ModelViewMatrix", _camera.GetViewMatrix()*_billboards[i].GetModelMatrix());
+		_shaderProgram.SetUniformMatrix("ProjectionMatrix", _camera.GetProjectionMatrix());
+		_shaderProgram.SetUniformf("Transparency", _billboards[i].GetTransparency());
 		_billboards[i].UpdateLife();
 		_billboards[i].Kill();
+		_particleSystem.Draw(i);
+		_particleSystem.DeactivateTexture();
 		_billboards[i].Revive(_type);
 	}
 
@@ -203,7 +201,7 @@ int main(int argc, char* argv[])
 
 	// Configuramos OpenGL. Este es el color
 	// por default del buffer de color en el framebuffer.
-	glClearColor(0.5f, 0.5f, 0.5f, 1.0f);
+	glClearColor(0.6f, 0.6f, 0.6f, 1.0f);
 	glEnable(GL_DEPTH);
 	glEnable(GL_CULL_FACE);
 	glDisable(GL_PROGRAM_POINT_SIZE);

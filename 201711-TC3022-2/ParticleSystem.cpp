@@ -12,7 +12,7 @@ ParticleSystem::~ParticleSystem()
 }
 
 void ParticleSystem::Create() {
-	_limit = 100;
+	_limit = 200;
 	for (int i = 0; i < _limit; i++) {
 		Billboard billboard;
 		_billboards.push_back(billboard);

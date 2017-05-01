@@ -20,7 +20,8 @@ private:
 	float _life;
 	float _speed;
 	bool _isDrawn;
-	
+	float _transparency;
+
 public:
 	Billboard();
 	void ChangeDirection(int type);
@@ -30,6 +31,7 @@ public:
 	void ChangeDrawValue(bool value);
 	bool isDrawn();
 	float GetLife();
+	float GetTransparency();
 	void SetLife(float life);
 	void SetPosition(float x, float y, float z);
 	void SetScale(float scale);

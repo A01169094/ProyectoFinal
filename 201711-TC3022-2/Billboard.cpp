@@ -4,14 +4,15 @@ Billboard::Billboard() {
 	//kien zabe quanthoo
 	_life = 200.0f;
 	_transform.SetPosition(float(rand() % 21 + -10), 10.0f, float(rand() % 21 + -10));
-	_direction = glm::vec3(0.0f, -0.1f, 0.0f);
+	_direction = glm::vec3(0.0f, -0.17f, 0.0f);
 	_isDrawn = false;
+	_transparency = 1.0f;
 }
 
 void Billboard::ChangeDirection(int type)
 {
 	if (type == 1) {
-		_direction = glm::vec3(0.0f,-0.1f, 0.0f);
+		_direction = glm::vec3(0.0f,-0.17f, 0.0f);
 	}
 	if (type == 2) {
 			_direction= glm::vec3(((float(rand() % 2)) - 0.5f)*.1f, -0.04f, ((float(rand() % 2)) - 0.5f)*.1f);
@@ -50,6 +51,11 @@ float Billboard::GetLife()
 	return _life;
 }
 
+float Billboard::GetTransparency()
+{
+	return _transparency;
+}
+
 void Billboard::SetLife(float life)
 {
 	_life = life;
@@ -81,10 +87,11 @@ Billboard::~Billboard()
 
 void Billboard::Kill()
 {
-		if (_life <= 10) {
-			SetScale(-0.10f);
+		if (_life < 40) {
+			_transparency-=0.025f;
 		}
 		if (_life == 0) {
+			_transparency = 0.0f;
 			ChangeDrawValue(false);
 		}
 	}
@@ -113,5 +120,6 @@ void Billboard::Revive(int type)
 			SetPosition(float(rand() % 21 + -10), float(rand() % 21 + -10), float(rand() % 21 + -10));
 	}
 		ChangeDrawValue(true);
+		_transparency = 1.0f;
 	}
 }
