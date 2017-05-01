@@ -13,11 +13,7 @@ public:
 	void SetType(int type);
 	void ActivateTexture();
 	void DeactivateTexture();
-	void UpdateLife();
-	//void Revive();
-	void ChangeSpeed(float speed);
 	void Draw(int number);
-	//void Kill();
 	std::vector<Billboard> GetBillboards();
 private:
 	int _limit;

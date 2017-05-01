@@ -105,14 +105,6 @@ void GameLoop()
 
 void Keyboard(unsigned char key, int y, int z)
 {
-	if (key == 'w')
-		_camera.MoveForward(0.1f, false);
-	if (key == 's')
-		_camera.MoveForward(-0.1f, false);
-	if (key == 'd')
-		_camera.MoveRight(0.1f, false);
-	if (key == 'a')
-		_camera.MoveRight(-0.1f, false);
 	if (key == '1')
 	{
 		_type = 1;
@@ -137,6 +129,18 @@ void Keyboard(unsigned char key, int y, int z)
 			_billboards[i].SetPosition(float(rand() % 21 + -10), float(rand() % 21 + -10), float(rand() % 21 + -10));
 		}
 	}
+	if (key = 'f') {
+		for (int i = 0; i < _billboards.size(); i++)
+		{
+			_billboards[i].ChangeSpeed(1.0f);
+		}
+	}
+	if (key = 's') {
+		for (int i = 0; i < _billboards.size(); i++)
+		{
+			_billboards[i].ChangeSpeed(-1.0f);
+		}
+	}
 }
 
 void SpecialKeys(int key, int x, int y)
@@ -146,9 +150,9 @@ void SpecialKeys(int key, int x, int y)
 	if (key == GLUT_KEY_DOWN)
 		_camera.MoveForward(-0.1f, false);
 	if (key == GLUT_KEY_RIGHT)
-		_camera.MoveRight(0.1f, false);
+		_camera.Yaw(1.0f);
 	if (key == GLUT_KEY_LEFT)
-		_camera.MoveRight(-0.1f, false);
+		_camera.Yaw(-1.0f);
 
 }
 
@@ -181,7 +185,7 @@ int main(int argc, char* argv[])
 	glutInitDisplayMode(GLUT_RGBA | GLUT_DEPTH | GLUT_DOUBLE);
 	glutInitWindowSize(400, 400);
 	// Le damos un nombre a la ventana y la creamos.
-	glutCreateWindow("Hello World GL");
+	glutCreateWindow("Particle System");
 	// Asociamos una funcion de render. Esta función se
 	// mandará a llamar para dibujar un frame.
 	glutDisplayFunc(GameLoop);

@@ -12,19 +12,21 @@ Billboard::Billboard() {
 void Billboard::ChangeDirection(int type)
 {
 	if (type == 1) {
-		_direction = glm::vec3(0.0f,-0.17f, 0.0f);
+		_direction = glm::vec3(0.0f,-0.17f, 0.0f)*_speed;
 	}
 	if (type == 2) {
-			_direction= glm::vec3(((float(rand() % 2)) - 0.5f)*.1f, -0.04f, ((float(rand() % 2)) - 0.5f)*.1f);
+		_direction = glm::vec3(((float(rand() % 2)) - 0.5f)*.1f, -0.04f, ((float(rand() % 2)) - 0.5f)*.1f)*_speed;
 		}
 	if (type == 3) {
-			_direction=glm::vec3(((float(rand()%2))-0.5f)*.1f, ((float(rand() % 2)) - 0.5f)*.1f, ((float(rand() % 2)) - 0.5f)*.1f);
+			_direction=glm::vec3(((float(rand()%2))-0.5f)*.1f, ((float(rand() % 2)) - 0.5f)*.1f, ((float(rand() % 2)) - 0.5f)*.1f)*_speed;
 		}
 }
 
 void Billboard::ChangeSpeed(float speed)
 {
-	_speed = speed;
+	if ((_speed <= 4.0f) && (_speed >= -4.0f)) {
+		_speed += speed;
+	}
 }
 
 void Billboard::Move() {

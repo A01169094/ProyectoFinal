@@ -69,22 +69,6 @@ void ParticleSystem::DeactivateTexture()
 	_texture.Unbind();
 }
 
-void ParticleSystem::UpdateLife() {
-	for (int i = 0; i < _billboards.size(); i++) {
-		if (_billboards[i].isDrawn()) {
-			_billboards[i].UpdateLife();
-		}
-	}
-}
-
-void ParticleSystem::ChangeSpeed(float speed)
-{
-	for (int i = 0; i<_billboards.size(); i++) {
-		_billboards[i].ChangeSpeed(speed);
-	}
-}
-
-
 void ParticleSystem::Draw(int number)
 {
 	_mesh.Draw(GL_TRIANGLES);
