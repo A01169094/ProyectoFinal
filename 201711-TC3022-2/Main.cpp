@@ -54,6 +54,7 @@ void Initialize()
 
 	_numberDrawn = 3;
 	_frameNumber = 0;
+
 }
 
 void Idle()
@@ -70,20 +71,23 @@ void GameLoop()
 
 	_shaderProgram.Activate();
 
+		//Aquí tenemos que mandar todo a los shaders en uniforms (checa el main): mvp modelview projection view model por cada transform de cada billboard
 	//Así más o menos se harían como por tanta (habría que modificar el espaciado y caída en x,y)
 	for (int i = 0; i < _numberDrawn; i++) {
-		int life=_billboards[i].GetLife();
-
 		_particleSystem.ActivateTexture();
-
+		_particleSystem.Draw(i);
 		//Tanda 1
 		_shaderProgram.SetUniformMatrix("ModelViewMatrix", _camera.GetViewMatrix()*_billboards[i].GetModelMatrix());
 		_shaderProgram.SetUniformMatrix("ProjectionMatrix", _camera.GetProjectionMatrix());
-		_particleSystem.Draw(i);
+		//_particleSystem.Draw(i);
+		_billboards[i].ChangeDrawValue(true);
+
 		_particleSystem.DeactivateTexture();
 		_billboards[i].ChangeDirection(1);
 		_billboards[i].Move();
-		_billboards[i].SetLife(life--);
+		_billboards[i].UpdateLife();
+		_billboards[i].Kill();
+		_billboards[i].Revive();
 	}
 
 	_shaderProgram.Deactivate();
@@ -97,9 +101,7 @@ void GameLoop()
 			_frameNumber = 0;
 		}
 	}
-	_particleSystem.Kill();
-	_particleSystem.Revive();
-	_particleSystem.UpdateLife();
+	//_particleSystem.UpdateLife();
 }
 
 void Keyboard(unsigned char key, int y, int z)

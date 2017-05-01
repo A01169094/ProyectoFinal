@@ -77,7 +77,7 @@ void ParticleSystem::UpdateLife() {
 	}
 }
 
-void ParticleSystem::Revive()
+/*void ParticleSystem::Revive()
 {
 	for (int i = 0; i < _billboards.size(); i++) {
 		if (_billboards[i].GetLife() == 0) {
@@ -87,7 +87,7 @@ void ParticleSystem::Revive()
 			_billboards[i].ChangeDrawValue(true);
 		}
 	}
-}
+}*/
 
 void ParticleSystem::ChangeSpeed(float speed)
 {
@@ -99,17 +99,17 @@ void ParticleSystem::ChangeSpeed(float speed)
 
 void ParticleSystem::Draw(int number)
 {
-	for (int i = _limit-1; i >= number; i--) {
+	/*for (int i = _limit-1; i >= number; i--) {
 		_billboards[i].ChangeDrawValue(false);
 	}
 	for (int i = 0; i < number; i++) {
 		_billboards[i].ChangeDrawValue(true);
 		//Aquí tenemos que mandar todo a los shaders en uniforms (checa el main): mvp modelview projection view model por cada transform de cada billboard
-		_mesh.Draw(GL_TRIANGLES);
-	}
+		*/_mesh.Draw(GL_TRIANGLES);
+	//}
 }
 
-void ParticleSystem::Kill()
+/*void ParticleSystem::Kill()
 {
 	for (int i = 0; i < _billboards.size(); i++) {
 		if (_billboards[i].GetLife() <= 5) {
@@ -119,7 +119,7 @@ void ParticleSystem::Kill()
 			_billboards[i].ChangeDrawValue(false);
 		}
 	}
-}
+}*/
 
 /*void ParticleSystem::PruebaDraw(int bill)
 {

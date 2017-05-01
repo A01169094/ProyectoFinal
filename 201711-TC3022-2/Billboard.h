@@ -36,5 +36,7 @@ public:
 	glm::mat4 GetModelMatrix();
 	Transform GetTransform();
 	~Billboard();
+	void Kill();
+	void Revive();
 };
 
