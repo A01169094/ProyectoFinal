@@ -2,7 +2,7 @@
 Billboard::Billboard() {
 	_speed = 1.0f;
 	//kien zabe quanthoo
-	_life = 1000;
+	_life = 400.0f;
 	_transform.SetPosition(float(rand() % 20 + -10), 10.0f, float(rand() % 20 + -10));
 	_direction = glm::vec3(0.0f, -0.01f, 0.0f);
 	_isDrawn = false;
@@ -29,7 +29,7 @@ void Billboard::Move() {
 
 void Billboard::UpdateLife()
 {
-	_life--;
+	_life-=0.5f;
 }
 
 void Billboard::ChangeDrawValue(bool value)
@@ -89,7 +89,7 @@ void Billboard::Kill()
 void Billboard::Revive()
 {
 		if (_life == 0) {
-			SetLife(1000);
+			SetLife(400.f);
 			SetScale(1.0f);
 			SetPosition(float(rand() % 20 + -10), 10.0f, float(rand() % 20 + -10));
 			ChangeDrawValue(true);

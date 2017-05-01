@@ -17,7 +17,7 @@ private:
 	std::vector<glm::vec3> _initialPositions;
 	Transform _transform;
 	glm::vec3 _direction;
-	int _life;
+	float _life;
 	float _speed;
 	bool _isDrawn;
 	

@@ -81,7 +81,6 @@ void GameLoop()
 		_shaderProgram.SetUniformMatrix("ProjectionMatrix", _camera.GetProjectionMatrix());
 		//_particleSystem.Draw(i);
 		_billboards[i].ChangeDrawValue(true);
-
 		_particleSystem.DeactivateTexture();
 		_billboards[i].ChangeDirection(1);
 		_billboards[i].Move();
@@ -95,7 +94,7 @@ void GameLoop()
 	// Cambiar el buffer actual
 	glutSwapBuffers();
 	_frameNumber++;
-	if (_frameNumber == 12) {
+	if (_frameNumber == 24) {
 		if (_numberDrawn <= 96) {
 			_numberDrawn += 3;
 			_frameNumber = 0;
@@ -129,8 +128,7 @@ void SpecialKeys(int key, int x, int y)
 
 }
 
-int _previousX = -1;
-bool _mousePressed = false;
+/*bool _mousePressed = false;
 
 void MouseButtons(int button, int state, int x, int y)
 {
@@ -160,7 +158,7 @@ void MousePassiveMotion(int x, int y)
 
 	if (deltaX)
 		glutWarpPointer(centerX, centerY);
-}
+}*/
 
 void ReshapeWindow(int width, int height)
 {
@@ -198,9 +196,9 @@ int main(int argc, char* argv[])
 	glutIdleFunc(Idle);
 	glutKeyboardFunc(Keyboard);
 	glutSpecialFunc(SpecialKeys);
-	glutMouseFunc(MouseButtons);
+	/*glutMouseFunc(MouseButtons);
 	glutMotionFunc(MouseMotion);
-	glutPassiveMotionFunc(MousePassiveMotion);
+	glutPassiveMotionFunc(MousePassiveMotion);*/
 	int centerX = glutGet(GLUT_WINDOW_WIDTH) / 2;
 	int centerY = glutGet(GLUT_WINDOW_HEIGHT) / 2;
 	glutWarpPointer(centerX, centerY);
