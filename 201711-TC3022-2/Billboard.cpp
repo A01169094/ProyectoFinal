@@ -42,12 +42,12 @@ bool Billboard::isDrawn()
 	return _isDrawn;
 }
 
-int Billboard::GetLife()
+float Billboard::GetLife()
 {
 	return _life;
 }
 
-void Billboard::SetLife(int life)
+void Billboard::SetLife(float life)
 {
 	_life = life;
 }
@@ -86,12 +86,20 @@ void Billboard::Kill()
 		}
 	}
 
-void Billboard::Revive()
+void Billboard::Revive(int type)
 {
-		if (_life == 0) {
-			SetLife(400.f);
-			SetScale(1.0f);
-			SetPosition(float(rand() % 20 + -10), 10.0f, float(rand() % 20 + -10));
-			ChangeDrawValue(true);
+	if (_life == 0) {
+		if (type == 1) {
+			SetLife(200.f);
+		}
+		if (type == 2) {
+			SetLife(800.f);
+		}
+		if (type == 3) {
+			SetLife(1000.f);
+		}
+		SetScale(1.0f);
+		SetPosition(float(rand() % 20 + -10), 10.0f, float(rand() % 20 + -10));
+		ChangeDrawValue(true);
 		}
 }

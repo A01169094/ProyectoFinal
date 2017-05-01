@@ -20,12 +20,12 @@ Samantha López Xavier A01370070
 #include <vector>
 #include <sstream>
 
-//Mesh _sineWaveMesh;
 ShaderProgram _shaderProgram;
 std::vector<Billboard> _billboards;
 ParticleSystem _particleSystem;
 int _numberDrawn;
 int _frameNumber;
+int _type;
 Camera _camera;
 
 void Initialize()
@@ -75,18 +75,17 @@ void GameLoop()
 	//Así más o menos se harían como por tanta (habría que modificar el espaciado y caída en x,y)
 	for (int i = 0; i < _numberDrawn; i++) {
 		_particleSystem.ActivateTexture();
-		_particleSystem.Draw(i);
 		//Tanda 1
 		_shaderProgram.SetUniformMatrix("ModelViewMatrix", _camera.GetViewMatrix()*_billboards[i].GetModelMatrix());
 		_shaderProgram.SetUniformMatrix("ProjectionMatrix", _camera.GetProjectionMatrix());
-		//_particleSystem.Draw(i);
+		_particleSystem.Draw(i);
 		_billboards[i].ChangeDrawValue(true);
 		_particleSystem.DeactivateTexture();
-		_billboards[i].ChangeDirection(1);
+		_billboards[i].ChangeDirection(_type);
 		_billboards[i].Move();
 		_billboards[i].UpdateLife();
 		_billboards[i].Kill();
-		_billboards[i].Revive();
+		_billboards[i].Revive(_type);
 	}
 
 	_shaderProgram.Deactivate();
@@ -100,7 +99,6 @@ void GameLoop()
 			_frameNumber = 0;
 		}
 	}
-	//_particleSystem.UpdateLife();
 }
 
 void Keyboard(unsigned char key, int y, int z)
@@ -113,6 +111,33 @@ void Keyboard(unsigned char key, int y, int z)
 		_camera.MoveRight(0.1f, false);
 	if (key == 'a')
 		_camera.MoveRight(-0.1f, false);
+	if (key == '1')
+	{
+		_type = 1;
+		_particleSystem.SetType(1);
+		_billboards = _particleSystem.GetBillboards();
+		/*for (int i = 0; i < _billboards.size(); i++) {
+			_billboards[i].Revive(_type);
+		}*/
+	}
+	if (key == '2')
+	{
+		_type = 2;
+		_particleSystem.SetType(2);
+		_billboards = _particleSystem.GetBillboards();
+		/*for (int i = 0; i < _billboards.size(); i++) {
+			_billboards[i].Revive(_type);
+		}*/
+	}
+	if (key == '3')
+	{
+		_type = 3;
+		_particleSystem.SetType(3);
+		_billboards = _particleSystem.GetBillboards();
+		/*for (int i = 0; i < _billboards.size(); i++) {
+			_billboards[i].Revive(_type);
+		}*/
+	}
 }
 
 void SpecialKeys(int key, int x, int y)
@@ -127,38 +152,6 @@ void SpecialKeys(int key, int x, int y)
 		_camera.MoveRight(-0.1f, false);
 
 }
-
-/*bool _mousePressed = false;
-
-void MouseButtons(int button, int state, int x, int y)
-{
-	if (button == GLUT_LEFT_BUTTON)
-		_mousePressed = true;
-	if (button == GLUT_RIGHT_BUTTON)
-		_mousePressed = false;
-	_previousX = x;
-}
-
-void MouseMotion(int x, int y)
-{
-	if (!_mousePressed) return;
-
-	_camera.Yaw((x - _previousX)*0.1f);
-	_previousX = x;
-}
-
-//cuando el usuario mueve el mouse sin presionar
-void MousePassiveMotion(int x, int y)
-{
-	int centerX = glutGet(GLUT_WINDOW_WIDTH) / 2;
-	int centerY = glutGet(GLUT_WINDOW_HEIGHT) / 2;
-	int deltaX = x - centerX;
-
-	_camera.Rotate(0.0f, -deltaX*0.01f, 0.0f, true);
-
-	if (deltaX)
-		glutWarpPointer(centerX, centerY);
-}*/
 
 void ReshapeWindow(int width, int height)
 {
@@ -196,9 +189,6 @@ int main(int argc, char* argv[])
 	glutIdleFunc(Idle);
 	glutKeyboardFunc(Keyboard);
 	glutSpecialFunc(SpecialKeys);
-	/*glutMouseFunc(MouseButtons);
-	glutMotionFunc(MouseMotion);
-	glutPassiveMotionFunc(MousePassiveMotion);*/
 	int centerX = glutGet(GLUT_WINDOW_WIDTH) / 2;
 	int centerY = glutGet(GLUT_WINDOW_HEIGHT) / 2;
 	glutWarpPointer(centerX, centerY);
@@ -214,7 +204,6 @@ int main(int argc, char* argv[])
 	// por default del buffer de color en el framebuffer.
 	glClearColor(1.0f, 1.0f, 0.5f, 1.0f);
 	glEnable(GL_DEPTH);
-	//glEnable(GL_DEPTH_TEST);
 	glEnable(GL_CULL_FACE);
 	glDisable(GL_PROGRAM_POINT_SIZE);
 	glPointSize(5);

@@ -29,14 +29,14 @@ public:
 	void UpdateLife();
 	void ChangeDrawValue(bool value);
 	bool isDrawn();
-	int GetLife();
-	void SetLife(int life);
+	float GetLife();
+	void SetLife(float life);
 	void SetPosition(float x, float y, float z);
 	void SetScale(float scale);
 	glm::mat4 GetModelMatrix();
 	Transform GetTransform();
 	~Billboard();
 	void Kill();
-	void Revive();
+	void Revive(int type);
 };
 
