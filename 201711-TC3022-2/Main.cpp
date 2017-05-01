@@ -45,7 +45,9 @@ void Initialize()
 	_camera.SetPerspective(1.0f, 1000.0f, 0.0f, 1.0f);
 	_camera.SetPosition(0.0f, 0.0f, -10.0f);
 
+	_type = 1;
 	_particleSystem.SetType(1);
+	
 	_billboards = _particleSystem.GetBillboards();
 
 	_shaderProgram.Activate();
@@ -117,7 +119,7 @@ void Keyboard(unsigned char key, int y, int z)
 	{
 		_type = 1;
 		_particleSystem.SetType(1);
-		_billboards = _particleSystem.GetBillboards();
+//		_billboards = _particleSystem.GetBillboards();
 		/*for (int i = 0; i < _billboards.size(); i++) {
 			_billboards[i].Revive(_type);
 		}*/
@@ -126,7 +128,7 @@ void Keyboard(unsigned char key, int y, int z)
 	{
 		_type = 2;
 		_particleSystem.SetType(2);
-		_billboards = _particleSystem.GetBillboards();
+		//_billboards = _particleSystem.GetBillboards();
 		/*for (int i = 0; i < _billboards.size(); i++) {
 			_billboards[i].Revive(_type);
 		}*/
@@ -135,7 +137,7 @@ void Keyboard(unsigned char key, int y, int z)
 	{
 		_type = 3;
 		_particleSystem.SetType(3);
-		_billboards = _particleSystem.GetBillboards();
+		//_billboards = _particleSystem.GetBillboards();
 		/*for (int i = 0; i < _billboards.size(); i++) {
 			_billboards[i].Revive(_type);
 		}*/
