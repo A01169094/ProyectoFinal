@@ -62,6 +62,8 @@ void Idle()
 	glutPostRedisplay();
 }
 
+//woo
+
 void GameLoop()
 {
 	// Siempre es recomendable borrar la información anterior del framebuffer.
