@@ -96,7 +96,7 @@ void Billboard::Revive(int type)
 			SetLife(float(rand()%101 + 200));
 		}
 		if (type == 2) {
-			SetLife(float(rand() % 51 + 700));
+			SetLife(float(rand() % 101 + 300));
 		}
 		if (type == 3) {
 			SetLife(float(rand() % 101 + 1000));
