@@ -116,7 +116,7 @@ void ParticleSystem::Kill()
 			_billboards[i].SetScale(-0.20f);
 		}
 		if(_billboards[i].GetLife() == 0){
-			_billboards[i].ChangeDrawValue(true);
+			_billboards[i].ChangeDrawValue(false);
 		}
 	}
 }
