@@ -43,7 +43,7 @@ void Initialize()
 	_shaderProgram.Deactivate();
 
 	_camera.SetPerspective(1.0f, 1000.0f, 0.0f, 1.0f);
-	_camera.SetPosition(0.0f, 0.0f, -10.0f);
+	_camera.SetPosition(0.0f, 0.0f, -12.0f);
 
 	_type = 1;
 	_particleSystem.SetType(1);
@@ -128,7 +128,7 @@ void Keyboard(unsigned char key, int y, int z)
 		_type = 2;
 		_particleSystem.SetType(2);
 		for (int i = 0; i < _billboards.size(); i++) {
-			_billboards[i].SetPosition(float(rand() % 21 + -10), float(rand() % 21 + -10), float(rand() % 21 + -10));
+			_billboards[i].SetPosition(float(rand() % 21 + -10), float(rand() % 16 - 5), float(rand() % 21 + -10));
 		}
 	}
 	if (key == '3')
@@ -203,7 +203,7 @@ int main(int argc, char* argv[])
 
 	// Configuramos OpenGL. Este es el color
 	// por default del buffer de color en el framebuffer.
-	glClearColor(1.0f, 1.0f, 0.5f, 1.0f);
+	glClearColor(0.5f, 0.5f, 0.5f, 1.0f);
 	glEnable(GL_DEPTH);
 	glEnable(GL_CULL_FACE);
 	glDisable(GL_PROGRAM_POINT_SIZE);

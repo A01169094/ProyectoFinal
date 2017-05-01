@@ -14,7 +14,7 @@ void Billboard::ChangeDirection(int type)
 		_direction = glm::vec3(0.0f,-0.1f, 0.0f);
 	}
 	if (type == 2) {
-			_direction= glm::vec3(((float(rand() % 2)) - 0.5f)*.1f, -0.03f, ((float(rand() % 2)) - 0.5f)*.1f);
+			_direction= glm::vec3(((float(rand() % 2)) - 0.5f)*.1f, -0.04f, ((float(rand() % 2)) - 0.5f)*.1f);
 		}
 	if (type == 3) {
 			_direction=glm::vec3(((float(rand()%2))-0.5f)*.1f, ((float(rand() % 2)) - 0.5f)*.1f, ((float(rand() % 2)) - 0.5f)*.1f);
@@ -93,18 +93,21 @@ void Billboard::Revive(int type)
 {
 	if (_life == 0) {
 		if (type == 1) {
-			SetLife(200.f);
+			SetLife(float(rand()%101 + 200));
 		}
 		if (type == 2) {
-			SetLife(600.f);
+			SetLife(float(rand() % 51 + 700));
 		}
 		if (type == 3) {
-			SetLife(1000.f);
+			SetLife(float(rand() % 101 + 1000));
 		}
 		SetScale(1.0f);
-		if ((type == 1) || (type == 2))
+		if (type == 1)
 		{
 			SetPosition(float(rand() % 21 + -10), float(rand() % 5 + 7), float(rand() % 21 + -10));
+		}
+		if (type == 2) {
+			SetPosition(float(rand() % 21 + -10), float(rand() % 6 + 6), float(rand() % 21 + -10));
 		}
 		if (type == 3){
 			SetPosition(float(rand() % 21 + -10), float(rand() % 21 + -10), float(rand() % 21 + -10));
