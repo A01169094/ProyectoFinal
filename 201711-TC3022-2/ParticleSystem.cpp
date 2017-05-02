@@ -69,8 +69,11 @@ void ParticleSystem::DeactivateTexture()
 	_texture.Unbind();
 }
 
-void ParticleSystem::Draw(int number)
+void ParticleSystem::Draw(int number, int type)
 {
+	if (type == 3) {
+		_billboards[number].SetScale(5.0f,5.0f,5.0f);
+}
 	_mesh.Draw(GL_TRIANGLES);
 }
 
