@@ -70,7 +70,6 @@ void Idle()
 	glutPostRedisplay();
 }
 
-//woo
 
 void GameLoop()
 {
