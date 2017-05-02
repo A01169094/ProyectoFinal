@@ -90,6 +90,7 @@ void GameLoop()
 		_shaderProgram.SetUniformMatrix("ModelViewMatrix", _camera.GetViewMatrix()*_billboards[i].GetModelMatrix());
 		_shaderProgram.SetUniformMatrix("ProjectionMatrix", _camera.GetProjectionMatrix());
 		_shaderProgram.SetUniformf("Transparency", _billboards[i].GetTransparency());
+		_shaderProgram.SetUniformf("Scale", _billboards[i].GetTransform().GetScale().x);
 		_billboards[i].UpdateLife();
 		_billboards[i].Kill();
 		_particleSystem.Draw(i);
@@ -102,6 +103,7 @@ void GameLoop()
 	_shaderProgram.SetUniformMatrix("ProjectionMatrix", _camera.GetProjectionMatrix());
 	_shaderProgram.SetUniformMatrix("mvpMatrix", _camera.GetViewProjection() * _TransInstrucciones.GetModelMatrix());
 	_shaderProgram.SetUniformf("Transparency", 1.0f);
+	_shaderProgram.SetUniformf("Scale", 1.0f);
 	_particleSystem.Draw(GL_TRIANGLES);
 	_texturaInstrucciones.Unbind();
 
@@ -145,9 +147,9 @@ void Keyboard(unsigned char key, int y, int z)
 		_type = 3;
 		_particleSystem.SetType(3);
 		for (int i = 0; i < _billboards.size(); i++) {
-			_billboards[i].SetPosition(float(rand() % 21 + -10), float(rand() % 21 + -10), float(rand() % 21 + -10));
+			_billboards[i].SetPosition(float(rand() % 11 + -20), float(rand() % 21 + -10), float(rand() % 21 + -10));
 			_billboards[i].SetSpeed(1.0f);
-			_billboards[i].SetScale(15.0f,15.0f,1.0f);
+			_billboards[i].SetScale(3.0f,3.0f,3.0f);
 		}
 	}
 	if (key == 'f') {
