@@ -163,6 +163,7 @@
     <ClInclude Include="Transform.h" />
   </ItemGroup>
   <ItemGroup>
+    <Image Include="..\..\..\..\Pictures\instrucciones.jpg" />
     <Image Include="heighmap.jpg" />
     <Image Include="lluvia.png" />
     <Image Include="nieve.png" />

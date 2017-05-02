@@ -27,6 +27,13 @@ int _numberDrawn;
 int _frameNumber;
 int _type;
 Camera _camera;
+//****************************************************FALLE********************************************
+Camera _camera2;
+Mesh _instrucciones;
+Texture2D _texturaInstrucciones;
+Transform _TransInstrucciones;
+//****************************************************FALLE********************************************
+
 
 void Initialize()
 {
@@ -44,6 +51,13 @@ void Initialize()
 
 	_camera.SetPerspective(1.0f, 1000.0f, 0.0f, 1.0f);
 	_camera.SetPosition(0.0f, 0.0f, -12.0f);
+
+	//****************************************************FALLE********************************************
+	_camera2.SetPerspective(1.0f, 1000.0f, 0.0f, 1.0f);
+	_camera2.SetPosition(0.0f, 0.0f, -12.0f);
+
+	_texturaInstrucciones.LoadTexture("instrucciones.jpg");
+	//****************************************************FALLE********************************************
 
 	_type = 1;
 	_particleSystem.SetType(1);
@@ -74,6 +88,18 @@ void GameLoop()
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
 	_shaderProgram.Activate();
+
+	//****************************************************FALLE********************************************
+	glActiveTexture(GL_TEXTURE0);
+	_texturaInstrucciones.Bind();
+	_shaderProgram.SetUniformMatrix("ModelViewMatrix", _camera2.GetViewMatrix()*_TransInstrucciones.GetModelMatrix());
+	_shaderProgram.SetUniformMatrix("ProjectionMatrix", _camera2.GetProjectionMatrix());
+	_instrucciones.Draw(GL_TRIANGLES);
+	glActiveTexture(GL_TEXTURE0);
+	_texturaInstrucciones.Unbind();
+	//****************************************************FALLE********************************************
+
+
 
 	for (int i = 0; i < _numberDrawn; i++) {
 		_particleSystem.ActivateTexture();
@@ -111,6 +137,7 @@ void Keyboard(unsigned char key, int y, int z)
 		_particleSystem.SetType(1);
 		for (int i = 0; i < _billboards.size(); i++) {
 			_billboards[i].SetPosition(float(rand() % 21 + -10), float(rand() % 16 -5), float(rand() % 21 + -10));
+			_billboards[i].SetSpeed(1.0f);
 		}
 	}
 	if (key == '2')
@@ -119,6 +146,7 @@ void Keyboard(unsigned char key, int y, int z)
 		_particleSystem.SetType(2);
 		for (int i = 0; i < _billboards.size(); i++) {
 			_billboards[i].SetPosition(float(rand() % 21 + -10), float(rand() % 16 - 5), float(rand() % 21 + -10));
+			_billboards[i].SetSpeed(1.0f);
 		}
 	}
 	if (key == '3')
@@ -127,32 +155,45 @@ void Keyboard(unsigned char key, int y, int z)
 		_particleSystem.SetType(3);
 		for (int i = 0; i < _billboards.size(); i++) {
 			_billboards[i].SetPosition(float(rand() % 21 + -10), float(rand() % 21 + -10), float(rand() % 21 + -10));
+			_billboards[i].SetSpeed(1.0f);
 		}
 	}
-	if (key = 'f') {
+	if (key == 'f') {
 		for (int i = 0; i < _billboards.size(); i++)
 		{
-			_billboards[i].ChangeSpeed(1.0f);
+			_billboards[i].ChangeSpeed(0.5f);
 		}
 	}
-	if (key = 's') {
+	if (key == 's') {
 		for (int i = 0; i < _billboards.size(); i++)
 		{
-			_billboards[i].ChangeSpeed(-1.0f);
+			_billboards[i].ChangeSpeed(-0.5f);
 		}
 	}
 }
 
 void SpecialKeys(int key, int x, int y)
 {
-	if (key == GLUT_KEY_UP)
+	if (key == GLUT_KEY_UP) {
 		_camera.MoveForward(0.1f, false);
-	if (key == GLUT_KEY_DOWN)
+		_camera2.MoveForward(0.1f, false);
+	}
+
+	if (key == GLUT_KEY_DOWN) {
 		_camera.MoveForward(-0.1f, false);
-	if (key == GLUT_KEY_RIGHT)
+		_camera2.MoveForward(-0.1f, false);
+	}
+
+	if (key == GLUT_KEY_RIGHT) {
 		_camera.Yaw(1.0f);
-	if (key == GLUT_KEY_LEFT)
+		_camera2.Yaw(1.0f);
+	}
+
+	if (key == GLUT_KEY_LEFT) {
 		_camera.Yaw(-1.0f);
+		_camera2.Yaw(-1.0f);
+	}
+	
 
 }
 
@@ -160,6 +201,8 @@ void ReshapeWindow(int width, int height)
 {
 	glViewport(0, 0, width, height);
 	_camera.SetPerspective(1.0f, 1000.0f, 60.0f, (float)width / (float)height);
+	_camera2.SetPerspective(1.0f, 1000.0f, 60.0f, (float)width / (float)height);
+
 }
 
 int main(int argc, char* argv[])
@@ -205,7 +248,7 @@ int main(int argc, char* argv[])
 
 	// Configuramos OpenGL. Este es el color
 	// por default del buffer de color en el framebuffer.
-	glClearColor(0.6f, 0.6f, 0.6f, 1.0f);
+	glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
 	glEnable(GL_DEPTH);
 	glEnable(GL_CULL_FACE);
 	glDisable(GL_PROGRAM_POINT_SIZE);

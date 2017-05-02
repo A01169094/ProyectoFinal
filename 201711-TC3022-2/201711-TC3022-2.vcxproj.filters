@@ -135,5 +135,8 @@
     <Image Include="lluvia.png">
       <Filter>Resource Files</Filter>
     </Image>
+    <Image Include="..\..\..\..\Pictures\instrucciones.jpg">
+      <Filter>Resource Files</Filter>
+    </Image>
   </ItemGroup>
 </Project>

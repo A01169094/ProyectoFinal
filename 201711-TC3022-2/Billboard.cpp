@@ -18,14 +18,20 @@ void Billboard::ChangeDirection(int type)
 		_direction = glm::vec3(((float(rand() % 2)) - 0.5f)*.1f, -0.04f, ((float(rand() % 2)) - 0.5f)*.1f)*_speed;
 		}
 	if (type == 3) {
-			_direction=glm::vec3(((float(rand()%2))-0.5f)*.1f, ((float(rand() % 2)) - 0.5f)*.1f, ((float(rand() % 2)) - 0.5f)*.1f)*_speed;
+			_direction=glm::vec3(((float(rand()%3))-0.5f), ((float(rand() % 3)) - 0.5f), ((float(rand() % 2)) - 0.5f)*.1)*_speed*0.09f;
 		}
 }
 
 void Billboard::ChangeSpeed(float speed)
 {
-	if ((_speed <= 4.0f) && (_speed >= -4.0f)) {
+	if ((_speed <= 4.0f) && (_speed >= 0.5f)) {
 		_speed += speed;
+	}
+	else if(_speed<0.5f) {
+		_speed += 0.5f;
+	}
+	else if (_speed>4) {
+		_speed -= 0.5f;
 	}
 }
 
@@ -108,7 +114,7 @@ void Billboard::Revive(int type)
 			SetLife(float(rand() % 101 + 300));
 		}
 		if (type == 3) {
-			SetLife(float(rand() % 101 + 1000));
+			SetLife(float(rand() % 101 + 400));
 		}
 		SetScale(1.0f);
 		if (type == 1)
@@ -124,4 +130,9 @@ void Billboard::Revive(int type)
 		ChangeDrawValue(true);
 		_transparency = 1.0f;
 	}
+}
+
+void Billboard::SetSpeed(float speed)
+{
+	_speed = speed;
 }

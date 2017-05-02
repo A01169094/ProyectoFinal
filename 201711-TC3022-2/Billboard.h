@@ -40,5 +40,6 @@ public:
 	~Billboard();
 	void Kill();
 	void Revive(int type);
+	void SetSpeed(float speed);
 };
 
