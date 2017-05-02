@@ -13,7 +13,7 @@ public:
 	void SetType(int type);
 	void ActivateTexture();
 	void DeactivateTexture();
-	void Draw(int number);
+	void Draw(int number, int type);
 	std::vector<Billboard> GetBillboards();
 private:
 	int _limit;

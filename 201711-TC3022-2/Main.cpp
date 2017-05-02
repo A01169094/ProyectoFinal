@@ -92,7 +92,7 @@ void GameLoop()
 		_shaderProgram.SetUniformf("Transparency", _billboards[i].GetTransparency());
 		_billboards[i].UpdateLife();
 		_billboards[i].Kill();
-		_particleSystem.Draw(i);
+		_particleSystem.Draw(i, _type);
 		_particleSystem.DeactivateTexture();
 		_billboards[i].Revive(_type);
 	}
@@ -102,7 +102,7 @@ void GameLoop()
 	_shaderProgram.SetUniformMatrix("ProjectionMatrix", _camera.GetProjectionMatrix());
 	_shaderProgram.SetUniformMatrix("mvpMatrix", _camera.GetViewProjection() * _TransInstrucciones.GetModelMatrix());
 	_shaderProgram.SetUniformf("Transparency", 1.0f);
-	_particleSystem.Draw(GL_TRIANGLES);
+	_particleSystem.Draw(GL_TRIANGLES, _type);
 	_texturaInstrucciones.Unbind();
 
 	_shaderProgram.Deactivate();
