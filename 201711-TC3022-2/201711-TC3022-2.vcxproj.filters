@@ -129,13 +129,13 @@
     <Image Include="nieve.png">
       <Filter>Resource Files</Filter>
     </Image>
-    <Image Include="polvo.png">
-      <Filter>Resource Files</Filter>
-    </Image>
     <Image Include="lluvia.png">
       <Filter>Resource Files</Filter>
     </Image>
     <Image Include="instrucciones.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="polvo.png">
       <Filter>Resource Files</Filter>
     </Image>
   </ItemGroup>
