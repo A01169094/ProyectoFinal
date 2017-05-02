@@ -38,6 +38,29 @@ Transform _TransInstrucciones;
 void Initialize()
 {
 	_particleSystem.Create();
+
+	//****************************************************FALLE********************************************
+	_instrucciones.CreateMesh(24);
+
+	std::vector<glm::vec3> _vertices;
+	_vertices.push_back(glm::vec3(-0.5f, -0.5f, 0.0f));
+	_vertices.push_back(glm::vec3(0.5f, -0.5f, 0.0f));
+	_vertices.push_back(glm::vec3(0.5f, 0.5f, 0.0f));
+	_vertices.push_back(glm::vec3(-0.5f, 0.5f, 0.0f));
+
+	std::vector<glm::vec2> texCoords;
+	texCoords.push_back(glm::vec2(0.0f, 0.0f));
+	texCoords.push_back(glm::vec2(1.0f, 0.0f));
+	texCoords.push_back(glm::vec2(1.0f, 1.0f));
+	texCoords.push_back(glm::vec2(0.0f, 1.0f));
+
+	std::vector<unsigned int> _indices;
+	_indices = { 0,1,2,0,2,3 };
+
+	_instrucciones.CreateMesh(4);
+	_instrucciones.SetPositionAttribute(_vertices, GL_STATIC_DRAW, 0);
+	_instrucciones.SetTexCoordAttribute(texCoords, GL_STATIC_DRAW, 1);
+	_instrucciones.SetIndices(_indices, GL_STATIC_DRAW);
 	
 	_shaderProgram.CreateProgram();
 	_shaderProgram.Activate();
@@ -45,6 +68,7 @@ void Initialize()
 	_shaderProgram.AttachShader("Default.frag", GL_FRAGMENT_SHADER);
 	_shaderProgram.SetAttribute(0, "VertexPosition");
 	_shaderProgram.SetAttribute(1, "VertexTexCoord");
+	//****************************************************FALLE********************************************
 
 	_shaderProgram.LinkProgram();
 	_shaderProgram.Deactivate();
@@ -90,12 +114,13 @@ void GameLoop()
 	_shaderProgram.Activate();
 
 	//****************************************************FALLE********************************************
-	glActiveTexture(GL_TEXTURE0);
+	glActiveTexture(GL_TEXTURE1);
 	_texturaInstrucciones.Bind();
 	_shaderProgram.SetUniformMatrix("ModelViewMatrix", _camera2.GetViewMatrix()*_TransInstrucciones.GetModelMatrix());
 	_shaderProgram.SetUniformMatrix("ProjectionMatrix", _camera2.GetProjectionMatrix());
+	_shaderProgram.SetUniformMatrix("mvpMatrix", _camera.GetViewProjection() * _TransInstrucciones.GetModelMatrix());
 	_instrucciones.Draw(GL_TRIANGLES);
-	glActiveTexture(GL_TEXTURE0);
+	glActiveTexture(GL_TEXTURE1);
 	_texturaInstrucciones.Unbind();
 	//****************************************************FALLE********************************************
 
@@ -176,21 +201,29 @@ void SpecialKeys(int key, int x, int y)
 {
 	if (key == GLUT_KEY_UP) {
 		_camera.MoveForward(0.1f, false);
+
+		//****************************************************FALLE********************************************
 		_camera2.MoveForward(0.1f, false);
 	}
 
 	if (key == GLUT_KEY_DOWN) {
 		_camera.MoveForward(-0.1f, false);
+
+		//****************************************************FALLE********************************************
 		_camera2.MoveForward(-0.1f, false);
 	}
 
 	if (key == GLUT_KEY_RIGHT) {
 		_camera.Yaw(1.0f);
+
+		//****************************************************FALLE********************************************
 		_camera2.Yaw(1.0f);
 	}
 
 	if (key == GLUT_KEY_LEFT) {
 		_camera.Yaw(-1.0f);
+
+		//****************************************************FALLE********************************************
 		_camera2.Yaw(-1.0f);
 	}
 	
