@@ -34,7 +34,7 @@ public:
 	float GetTransparency();
 	void SetLife(float life);
 	void SetPosition(float x, float y, float z);
-	void SetScale(float scale);
+	void SetScale(float x, float y, float z);
 	glm::mat4 GetModelMatrix();
 	Transform GetTransform();
 	~Billboard();

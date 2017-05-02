@@ -27,48 +27,22 @@ int _numberDrawn;
 int _frameNumber;
 int _type;
 Camera _camera;
-//****************************************************FALLE********************************************
-Camera _camera2;
-Mesh _instrucciones;
+
 Texture2D _texturaInstrucciones;
 Transform _TransInstrucciones;
-//****************************************************FALLE********************************************
+
 
 
 void Initialize()
 {
 	_particleSystem.Create();
 
-	//****************************************************FALLE********************************************
-	_instrucciones.CreateMesh(24);
-
-	std::vector<glm::vec3> _vertices;
-	_vertices.push_back(glm::vec3(-0.5f, -0.5f, 0.0f));
-	_vertices.push_back(glm::vec3(0.5f, -0.5f, 0.0f));
-	_vertices.push_back(glm::vec3(0.5f, 0.5f, 0.0f));
-	_vertices.push_back(glm::vec3(-0.5f, 0.5f, 0.0f));
-
-	std::vector<glm::vec2> texCoords;
-	texCoords.push_back(glm::vec2(0.0f, 0.0f));
-	texCoords.push_back(glm::vec2(1.0f, 0.0f));
-	texCoords.push_back(glm::vec2(1.0f, 1.0f));
-	texCoords.push_back(glm::vec2(0.0f, 1.0f));
-
-	std::vector<unsigned int> _indices;
-	_indices = { 0,1,2,0,2,3 };
-
-	_instrucciones.CreateMesh(4);
-	_instrucciones.SetPositionAttribute(_vertices, GL_STATIC_DRAW, 0);
-	_instrucciones.SetTexCoordAttribute(texCoords, GL_STATIC_DRAW, 1);
-	_instrucciones.SetIndices(_indices, GL_STATIC_DRAW);
-	
 	_shaderProgram.CreateProgram();
 	_shaderProgram.Activate();
 	_shaderProgram.AttachShader("Billboard.vert", GL_VERTEX_SHADER);
 	_shaderProgram.AttachShader("Default.frag", GL_FRAGMENT_SHADER);
 	_shaderProgram.SetAttribute(0, "VertexPosition");
 	_shaderProgram.SetAttribute(1, "VertexTexCoord");
-	//****************************************************FALLE********************************************
 
 	_shaderProgram.LinkProgram();
 	_shaderProgram.Deactivate();
@@ -76,16 +50,10 @@ void Initialize()
 	_camera.SetPerspective(1.0f, 1000.0f, 0.0f, 1.0f);
 	_camera.SetPosition(0.0f, 0.0f, -12.0f);
 
-	//****************************************************FALLE********************************************
-	_camera2.SetPerspective(1.0f, 1000.0f, 0.0f, 1.0f);
-	_camera2.SetPosition(0.0f, 0.0f, -12.0f);
-
-	_texturaInstrucciones.LoadTexture("instrucciones.jpg");
-	//****************************************************FALLE********************************************
-
+	_texturaInstrucciones.LoadTexture("instrucciones.png");
 	_type = 1;
 	_particleSystem.SetType(1);
-	
+	_TransInstrucciones.SetPosition(0.0f, -0.07f, -11.0f);
 	_billboards = _particleSystem.GetBillboards();
 
 	_shaderProgram.Activate();
@@ -113,19 +81,7 @@ void GameLoop()
 
 	_shaderProgram.Activate();
 
-	//****************************************************FALLE********************************************
-	glActiveTexture(GL_TEXTURE1);
-	_texturaInstrucciones.Bind();
-	_shaderProgram.SetUniformMatrix("ModelViewMatrix", _camera2.GetViewMatrix()*_TransInstrucciones.GetModelMatrix());
-	_shaderProgram.SetUniformMatrix("ProjectionMatrix", _camera2.GetProjectionMatrix());
-	_shaderProgram.SetUniformMatrix("mvpMatrix", _camera.GetViewProjection() * _TransInstrucciones.GetModelMatrix());
-	_instrucciones.Draw(GL_TRIANGLES);
-	glActiveTexture(GL_TEXTURE1);
-	_texturaInstrucciones.Unbind();
-	//****************************************************FALLE********************************************
-
-
-
+	
 	for (int i = 0; i < _numberDrawn; i++) {
 		_particleSystem.ActivateTexture();
 		_billboards[i].ChangeDrawValue(true);
@@ -140,6 +96,14 @@ void GameLoop()
 		_particleSystem.DeactivateTexture();
 		_billboards[i].Revive(_type);
 	}
+
+	_texturaInstrucciones.Bind();
+	_shaderProgram.SetUniformMatrix("ModelViewMatrix", _camera.GetViewMatrix()*_TransInstrucciones.GetModelMatrix());
+	_shaderProgram.SetUniformMatrix("ProjectionMatrix", _camera.GetProjectionMatrix());
+	_shaderProgram.SetUniformMatrix("mvpMatrix", _camera.GetViewProjection() * _TransInstrucciones.GetModelMatrix());
+	_shaderProgram.SetUniformf("Transparency", 1.0f);
+	_particleSystem.Draw(GL_TRIANGLES);
+	_texturaInstrucciones.Unbind();
 
 	_shaderProgram.Deactivate();
 	
@@ -163,6 +127,7 @@ void Keyboard(unsigned char key, int y, int z)
 		for (int i = 0; i < _billboards.size(); i++) {
 			_billboards[i].SetPosition(float(rand() % 21 + -10), float(rand() % 16 -5), float(rand() % 21 + -10));
 			_billboards[i].SetSpeed(1.0f);
+			_billboards[i].SetScale(1.0f, 1.0f, 1.0f);
 		}
 	}
 	if (key == '2')
@@ -172,6 +137,7 @@ void Keyboard(unsigned char key, int y, int z)
 		for (int i = 0; i < _billboards.size(); i++) {
 			_billboards[i].SetPosition(float(rand() % 21 + -10), float(rand() % 16 - 5), float(rand() % 21 + -10));
 			_billboards[i].SetSpeed(1.0f);
+			_billboards[i].SetScale(1.0f, 1.0f, 1.0f);
 		}
 	}
 	if (key == '3')
@@ -181,6 +147,7 @@ void Keyboard(unsigned char key, int y, int z)
 		for (int i = 0; i < _billboards.size(); i++) {
 			_billboards[i].SetPosition(float(rand() % 21 + -10), float(rand() % 21 + -10), float(rand() % 21 + -10));
 			_billboards[i].SetSpeed(1.0f);
+			_billboards[i].SetScale(15.0f,15.0f,1.0f);
 		}
 	}
 	if (key == 'f') {
@@ -201,30 +168,22 @@ void SpecialKeys(int key, int x, int y)
 {
 	if (key == GLUT_KEY_UP) {
 		_camera.MoveForward(0.1f, false);
-
-		//****************************************************FALLE********************************************
-		_camera2.MoveForward(0.1f, false);
+		_TransInstrucciones.MoveForward(0.1f, false);
 	}
 
 	if (key == GLUT_KEY_DOWN) {
 		_camera.MoveForward(-0.1f, false);
-
-		//****************************************************FALLE********************************************
-		_camera2.MoveForward(-0.1f, false);
+		_TransInstrucciones.MoveForward(-0.1f, false);
 	}
 
 	if (key == GLUT_KEY_RIGHT) {
 		_camera.Yaw(1.0f);
-
-		//****************************************************FALLE********************************************
-		_camera2.Yaw(1.0f);
+		_TransInstrucciones.MoveRight(1.0f,false);
 	}
 
 	if (key == GLUT_KEY_LEFT) {
 		_camera.Yaw(-1.0f);
-
-		//****************************************************FALLE********************************************
-		_camera2.Yaw(-1.0f);
+		_TransInstrucciones.MoveRight(-1.0f, false);
 	}
 	
 
@@ -234,8 +193,6 @@ void ReshapeWindow(int width, int height)
 {
 	glViewport(0, 0, width, height);
 	_camera.SetPerspective(1.0f, 1000.0f, 60.0f, (float)width / (float)height);
-	_camera2.SetPerspective(1.0f, 1000.0f, 60.0f, (float)width / (float)height);
-
 }
 
 int main(int argc, char* argv[])

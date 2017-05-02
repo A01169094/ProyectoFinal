@@ -27,11 +27,11 @@ void Billboard::ChangeSpeed(float speed)
 	if ((_speed <= 4.0f) && (_speed >= 0.5f)) {
 		_speed += speed;
 	}
-	else if(_speed<0.5f) {
-		_speed += 0.5f;
+	if(_speed<0.5f) {
+		_speed = 0.5f;
 	}
-	else if (_speed>4) {
-		_speed -= 0.5f;
+	if (_speed>4) {
+		_speed = 4.0f;
 	}
 }
 
@@ -74,9 +74,9 @@ void Billboard::SetPosition(float x, float y, float z)
 	_transform.SetPosition(x, y, z);
 }
 
-void Billboard::SetScale(float scale)
+void Billboard::SetScale(float x, float y, float z)
 {
-	_transform.SetScale(scale);
+	_transform.SetScale(x, y, z);
 }
 
 glm::mat4 Billboard::GetModelMatrix()
@@ -116,7 +116,6 @@ void Billboard::Revive(int type)
 		if (type == 3) {
 			SetLife(float(rand() % 101 + 400));
 		}
-		SetScale(1.0f);
 		if (type == 1)
 		{
 			SetPosition(float(rand() % 21 + -10), float(rand() % 5 + 7), float(rand() % 21 + -10));

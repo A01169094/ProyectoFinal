@@ -59,13 +59,13 @@ void ParticleSystem::SetType(int type)
 }
 
 void ParticleSystem::ActivateTexture() {
-	glActiveTexture(GL_TEXTURE0);
 	_texture.Bind();
+	glActiveTexture(GL_TEXTURE0);
 }
 
 void ParticleSystem::DeactivateTexture()
 {
-	glActiveTexture(GL_TEXTURE0);
+	//glActiveTexture(GL_TEXTURE0);
 	_texture.Unbind();
 }
 
