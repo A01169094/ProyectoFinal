@@ -136,20 +136,8 @@
     <ClCompile Include="Transform.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="AnimatedColor.frag" />
     <None Include="Billboard.vert" />
     <None Include="Default.frag" />
-    <None Include="Default.vert" />
-    <None Include="DefaultTextured.frag" />
-    <None Include="DefaultTextured.vert" />
-    <None Include="DefaultTransform.vert" />
-    <None Include="HeightMap.frag" />
-    <None Include="HeightMap.vert" />
-    <None Include="PalmTree.frag" />
-    <None Include="PhongShading.frag" />
-    <None Include="PhongShading.vert" />
-    <None Include="SineWave.frag" />
-    <None Include="SineWave.vert" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Billboard.h" />
@@ -163,7 +151,6 @@
     <ClInclude Include="Transform.h" />
   </ItemGroup>
   <ItemGroup>
-    <Image Include="heighmap.jpg" />
     <Image Include="instrucciones.png" />
     <Image Include="lluvia.png" />
     <Image Include="nieve.png" />

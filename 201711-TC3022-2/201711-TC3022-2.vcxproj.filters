@@ -50,43 +50,7 @@
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <None Include="PalmTree.frag">
-      <Filter>Source Files\Shaders</Filter>
-    </None>
     <None Include="Default.frag">
-      <Filter>Source Files\Shaders</Filter>
-    </None>
-    <None Include="Default.vert">
-      <Filter>Source Files\Shaders</Filter>
-    </None>
-    <None Include="AnimatedColor.frag">
-      <Filter>Source Files\Shaders</Filter>
-    </None>
-    <None Include="DefaultTransform.vert">
-      <Filter>Source Files\Shaders</Filter>
-    </None>
-    <None Include="PhongShading.vert">
-      <Filter>Source Files\Shaders</Filter>
-    </None>
-    <None Include="PhongShading.frag">
-      <Filter>Source Files\Shaders</Filter>
-    </None>
-    <None Include="DefaultTextured.vert">
-      <Filter>Source Files\Shaders</Filter>
-    </None>
-    <None Include="DefaultTextured.frag">
-      <Filter>Source Files\Shaders</Filter>
-    </None>
-    <None Include="SineWave.vert">
-      <Filter>Source Files\Shaders</Filter>
-    </None>
-    <None Include="SineWave.frag">
-      <Filter>Source Files\Shaders</Filter>
-    </None>
-    <None Include="HeightMap.vert">
-      <Filter>Source Files\Shaders</Filter>
-    </None>
-    <None Include="HeightMap.frag">
       <Filter>Source Files\Shaders</Filter>
     </None>
     <None Include="Billboard.vert">
@@ -123,9 +87,6 @@
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <Image Include="heighmap.jpg">
-      <Filter>Resource Files</Filter>
-    </Image>
     <Image Include="nieve.png">
       <Filter>Resource Files</Filter>
     </Image>

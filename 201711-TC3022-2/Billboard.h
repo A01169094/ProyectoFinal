@@ -1,12 +1,5 @@
 #pragma once
-#include <GL/glew.h>
-#include <GL/freeglut.h>
 #include <glm/glm.hpp>
-#include <IL/il.h>
-#include "Camera.h"
-#include "Mesh.h"
-#include "ShaderProgram.h"
-#include "Texture2D.h"
 #include "Transform.h"
 #include <iostream>
 #include <vector>
