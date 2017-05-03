@@ -124,7 +124,7 @@ void Billboard::Revive(int type)
 			SetPosition(float(rand() % 21 + -10), float(rand() % 6 + 6), float(rand() % 21 + -10));
 		}
 		if (type == 3){
-			SetPosition(float(rand() % 21 + -10), float(rand() % 21 + -10), float(rand() % 21 + -10));
+			SetPosition(float(rand() % 11 + -10), float(rand() % 21 + -10), float(rand() % 21 + -10));
 	}
 		ChangeDrawValue(true);
 		_transparency = 1.0f;

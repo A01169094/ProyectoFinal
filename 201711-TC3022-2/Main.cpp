@@ -5,7 +5,7 @@ Samantha López Xavier A01370070
 ********************************************
 */
 
-#include <GL/glew.h>SineWaveShaderProgram
+#include <GL/glew.h>
 #include <GL/freeglut.h>
 #include <glm/glm.hpp>
 #include <IL/il.h>
@@ -23,17 +23,13 @@ Samantha López Xavier A01370070
 ShaderProgram _shaderProgram;
 std::vector<Billboard> _billboards;
 ParticleSystem _particleSystem;
+Camera _camera;
+Camera _instrucCamera;
+Texture2D _instrucTexture;
+Transform _instrucTransform;
 int _numberDrawn;
 int _frameNumber;
 int _type;
-Camera _camera;
-
-//**
-Camera _otraCamera;
-Texture2D _texturaInstrucciones;
-Transform _TransInstrucciones;
-
-
 
 void Initialize()
 {
@@ -45,22 +41,21 @@ void Initialize()
 	_shaderProgram.AttachShader("Default.frag", GL_FRAGMENT_SHADER);
 	_shaderProgram.SetAttribute(0, "VertexPosition");
 	_shaderProgram.SetAttribute(1, "VertexTexCoord");
-
 	_shaderProgram.LinkProgram();
 	_shaderProgram.Deactivate();
 
 	_camera.SetPerspective(1.0f, 1000.0f, 0.0f, 1.0f);
 	_camera.SetPosition(0.0f, 0.0f, -12.0f);
-//**
-	_otraCamera.SetOrthographic(1.0f,1.0f);
-	_otraCamera.SetPosition(0.0f, 0.0f, 0.0f);
-//**
-	_texturaInstrucciones.LoadTexture("instrucciones.png");
+
+	_instrucCamera.SetPerspective(1.0f, 1000.0f, 0.0f, 1.0f);
+	_instrucCamera.SetPosition(0.0f, 100.0f, 0.0f);
+	
+	_instrucTexture.LoadTexture("instrucciones.png");
 	
 	_type = 1;
 	_particleSystem.SetType(1);
-//**
-	_TransInstrucciones.SetPosition(0.0f, -0.07f, -11.0f);
+
+	_instrucTransform.SetPosition(0.0f, 100.0f, 1.0f);
 
 	_billboards = _particleSystem.GetBillboards();
 
@@ -70,7 +65,6 @@ void Initialize()
 
 	_numberDrawn = 3;
 	_frameNumber = 0;
-
 }
 
 void Idle()
@@ -81,14 +75,10 @@ void Idle()
 
 void GameLoop()
 {
-	// Siempre es recomendable borrar la información anterior del framebuffer.
-	// En este caso estamos borrando la información de color,
-	// y la información de profundidad.
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
 	_shaderProgram.Activate();
-
-
+	
 	for (int i = 0; i < _numberDrawn; i++) {
 		_particleSystem.ActivateTexture();
 		_billboards[i].ChangeDrawValue(true);
@@ -105,19 +95,16 @@ void GameLoop()
 		_billboards[i].Revive(_type);
 	}
 
-//**
-	_texturaInstrucciones.Bind();
-	_shaderProgram.SetUniformMatrix("ModelViewMatrix", _otraCamera.GetViewMatrix()*_TransInstrucciones.GetModelMatrix());
-	_shaderProgram.SetUniformMatrix("ProjectionMatrix", _otraCamera.GetProjectionMatrix());
+	_instrucTexture.Bind();
+	_shaderProgram.SetUniformMatrix("ModelViewMatrix", _instrucCamera.GetViewMatrix()*_instrucTransform.GetModelMatrix());
+	_shaderProgram.SetUniformMatrix("ProjectionMatrix", _instrucCamera.GetProjectionMatrix());
 	_shaderProgram.SetUniformf("Transparency", 1.0f);
 	_shaderProgram.SetUniformf("Scale", 1.0f);
 	_particleSystem.Draw(GL_TRIANGLES);
-	_texturaInstrucciones.Unbind();
+	_instrucTexture.Unbind();
 
 	_shaderProgram.Deactivate();
 	
-	// Cambiar el buffer actual
-	glutSwapBuffers();
 	_frameNumber++;
 	if (_frameNumber == 24) {
 		if (_numberDrawn <= 96) {
@@ -125,6 +112,8 @@ void GameLoop()
 			_frameNumber = 0;
 		}
 	}
+	
+	glutSwapBuffers();
 }
 
 void Keyboard(unsigned char key, int y, int z)
@@ -154,7 +143,7 @@ void Keyboard(unsigned char key, int y, int z)
 		_type = 3;
 		_particleSystem.SetType(3);
 		for (int i = 0; i < _billboards.size(); i++) {
-			_billboards[i].SetPosition(float(rand() % 11 + -20), float(rand() % 21 + -10), float(rand() % 21 + -10));
+			_billboards[i].SetPosition(float(rand() % 11 + -10), float(rand() % 21 + -10), float(rand() % 21 + -10));
 			_billboards[i].SetSpeed(1.0f);
 			_billboards[i].SetScale(5.0f,5.0f,5.0f);
 		}
@@ -177,63 +166,37 @@ void SpecialKeys(int key, int x, int y)
 {
 	if (key == GLUT_KEY_UP) {
 		_camera.MoveForward(0.1f, false);
-	//	_TransInstrucciones.MoveForward(0.1f, false);
 	}
 
 	if (key == GLUT_KEY_DOWN) {
 		_camera.MoveForward(-0.1f, false);
-//		_TransInstrucciones.MoveForward(-0.1f, false);
 	}
 
 	if (key == GLUT_KEY_RIGHT) {
 		_camera.Yaw(1.0f);
-	//	_TransInstrucciones.MoveRight(1.0f,false);
 	}
 
 	if (key == GLUT_KEY_LEFT) {
 		_camera.Yaw(-1.0f);
-		//_TransInstrucciones.MoveRight(-1.0f, false);
 	}
-	
-
 }
 
 void ReshapeWindow(int width, int height)
 {
 	glViewport(0, 0, width, height);
 	_camera.SetPerspective(1.0f, 1000.0f, 60.0f, (float)width / (float)height);
-
-//**
-	_otraCamera.SetPerspective(1.0f, 1000.0f, 60.0f, (float)width / (float)height);
-
+	_instrucCamera.SetPerspective(1.0f, 1000.0f, 60.0f, (float)width / (float)height);
 }
 
 int main(int argc, char* argv[])
 {
-	// Inicialización de Freeglut.
-	// Freeglut se encarga de crear una ventana
-	// En donde vamos a poder dibujar
 	glutInit(&argc, argv);
-	// Freeglut es el encargado de solicitar un contexto
-	// de OpenGL. El contexto se refiere a las capacidades
-	// que va a tener nuestra aplicación gráfica.
 	glutInitContextVersion(4, 4);
-	// Tenemos que informar que queremos trabajar únicamente con
-	// el pipeline programable
 	glutInitContextProfile(GLUT_CORE_PROFILE);
-	// Freeglut nos permite configurar eventos que ocurren en la venta.
-	// Un evento que nos interesa es cuando alguien cierra la venta.
-	// En este caso simplemente dejamos de renderear y terminamos el programa.
 	glutSetOption(GLUT_ACTION_ON_WINDOW_CLOSE, GLUT_ACTION_GLUTMAINLOOP_RETURNS);
-	// Configuramos el framebuffer. En este caso estamos solicitando
-	// un buffer true color RGBA, un buffer de profundidad y un segundo buffer
-	// para renderear.
 	glutInitDisplayMode(GLUT_RGBA | GLUT_DEPTH | GLUT_DOUBLE);
 	glutInitWindowSize(400, 400);
-	// Le damos un nombre a la ventana y la creamos.
 	glutCreateWindow("Particle System");
-	// Asociamos una funcion de render. Esta función se
-	// mandará a llamar para dibujar un frame.
 	glutDisplayFunc(GameLoop);
 	glutIdleFunc(Idle);
 	glutKeyboardFunc(Keyboard);
@@ -244,13 +207,8 @@ int main(int argc, char* argv[])
 	glutReshapeFunc(ReshapeWindow);
 
 
-	// Inicializar GLEW. Esta librería se encarga
-	// de obtener el API de OpenGL de nuestra tarjeta
-	// de video. SHAME ON YOU MICROSOFT.
 	glewInit();
 
-	// Configuramos OpenGL. Este es el color
-	// por default del buffer de color en el framebuffer.
 	glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
 	glEnable(GL_DEPTH);
 	glEnable(GL_CULL_FACE);
@@ -259,20 +217,13 @@ int main(int argc, char* argv[])
 	glEnable(GL_BLEND);
 	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 
-	// Inicializar DevIL
 	ilInit();
-	// Le decimos que queremos cambiar el punto de origen
 	ilEnable(IL_ORIGIN_SET);
-	// Configuramos el origen de las texturas cargadas por
-	// DevIL como abajo a la izquierda
 	ilOriginFunc(IL_ORIGIN_LOWER_LEFT);
 
 	Initialize();
 
-	// Iniciar la aplicación. El main se pausará en esta
-	// línea hasta que se cierre la ventana de OpenGL.
 	glutMainLoop();
 
-	// Terminar.
 	return 0;
 }
