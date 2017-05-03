@@ -1,7 +1,6 @@
 #include "Billboard.h"
 Billboard::Billboard() {
 	_speed = 1.0f;
-	//kien zabe quanthoo
 	_life = 200.0f;
 	_transform.SetPosition(float(rand() % 21 + -10), 10.0f, float(rand() % 21 + -10));
 	_direction = glm::vec3(0.0f, -0.17f, 0.0f);

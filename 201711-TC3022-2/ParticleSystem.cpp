@@ -40,17 +40,16 @@ void ParticleSystem::Create() {
 
 void ParticleSystem::SetType(int type)
 {
-	//lluvia
 	if (type == 1) {
 		_type = type;
 		_texture.LoadTexture("lluvia.png");
 	}
-	//nieve
+
 	if (type == 2) {
 		_type = type;
 		_texture.LoadTexture("nieve.png");
 	}
-	//polvo
+
 	if (type == 3) {
 		_type = type;
 		_texture.LoadTexture("polvo.png");
@@ -65,7 +64,6 @@ void ParticleSystem::ActivateTexture() {
 
 void ParticleSystem::DeactivateTexture()
 {
-	//glActiveTexture(GL_TEXTURE0);
 	_texture.Unbind();
 }
 
