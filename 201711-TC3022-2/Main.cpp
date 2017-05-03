@@ -145,7 +145,7 @@ void Keyboard(unsigned char key, int y, int z)
 		for (int i = 0; i < _billboards.size(); i++) {
 			_billboards[i].SetPosition(float(rand() % 11 + -10), float(rand() % 21 + -10), float(rand() % 21 + -10));
 			_billboards[i].SetSpeed(1.0f);
-			_billboards[i].SetScale(5.0f,5.0f,5.0f);
+			_billboards[i].SetScale(0.7f,0.7f,0.7f);
 		}
 	}
 	if (key == 'f') {
@@ -173,11 +173,11 @@ void SpecialKeys(int key, int x, int y)
 	}
 
 	if (key == GLUT_KEY_RIGHT) {
-		_camera.Yaw(1.0f);
+		_camera.Yaw(-1.0f);
 	}
 
 	if (key == GLUT_KEY_LEFT) {
-		_camera.Yaw(-1.0f);
+		_camera.Yaw(1.0f);
 	}
 }
 
