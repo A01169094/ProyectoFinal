@@ -17,7 +17,7 @@ void Billboard::ChangeDirection(int type)
 		_direction = glm::vec3(((float(rand() % 2)) - 0.5f)*.1f, -0.04f, ((float(rand() % 2)) - 0.5f)*.1f)*_speed;
 		}
 	if (type == 3) {
-			_direction=glm::vec3(((float(rand()%3))-0.5f), ((float(rand() % 3)) - 0.5f), ((float(rand() % 2)) - 0.5f)*.1)*_speed*0.09f;
+			_direction=glm::vec3(0.25f, 0.25f, 0.0f)*_speed*0.11f;
 		}
 }
 
@@ -92,10 +92,17 @@ Billboard::~Billboard()
 {
 }
 
-void Billboard::Kill()
+void Billboard::Kill(int type)
 {
-		if (_life < 40) {
-			_transparency-=0.025f;
+		if (_life < 80) {
+			if (type==3)
+			{
+				_transparency -= 0.0025f;
+			}
+			else
+			{
+				_transparency -= 0.0125f;
+			}
 		}
 		if (_life == 0 || _transparency==0) {
 			_transparency = 0.0f;
@@ -107,13 +114,13 @@ void Billboard::Revive(int type)
 {
 	if (_life == 0) {
 		if (type == 1) {
-			SetLife(float(rand()%101 + 200));
+			SetLife(float(rand()%101 + 250));
 		}
 		if (type == 2) {
-			SetLife(float(rand() % 101 + 300));
+			SetLife(float(rand() % 101 + 400));
 		}
 		if (type == 3) {
-			SetLife(float(rand() % 101 + 400));
+			SetLife(float(rand() % 101 + 600));
 		}
 		if (type == 1)
 		{
@@ -123,7 +130,7 @@ void Billboard::Revive(int type)
 			SetPosition(float(rand() % 21 + -10), float(rand() % 6 + 6), float(rand() % 21 + -10));
 		}
 		if (type == 3){
-			SetPosition(float(rand() % 11 + -10), float(rand() % 21 + -10), float(rand() % 21 + -10));
+			SetPosition(float(rand() % 11 + -18), float(rand() % 15 + -14), float(rand() % 6 - 7));
 	}
 		ChangeDrawValue(true);
 		SetTransparency(type);
@@ -143,6 +150,6 @@ void Billboard::SetTransparency(int type) {
 		_transparency = 1.0f;
 	}
 	if (type == 3) {
-		_transparency = 0.7f;
+		_transparency = 0.2f;
 	}
 }

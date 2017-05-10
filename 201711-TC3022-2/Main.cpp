@@ -89,7 +89,7 @@ void GameLoop()
 		_shaderProgram.SetUniformf("Transparency", _billboards[i].GetTransparency());
 		_shaderProgram.SetUniformf("Scale", _billboards[i].GetTransform().GetScale().x);
 		_billboards[i].UpdateLife();
-		_billboards[i].Kill();
+		_billboards[i].Kill(_type);
 		_particleSystem.Draw(i);
 		_particleSystem.DeactivateTexture();
 		_billboards[i].Revive(_type);
@@ -147,7 +147,7 @@ void Keyboard(unsigned char key, int y, int z)
 		_type = 3;
 		_particleSystem.SetType(3);
 		for (int i = 0; i < _billboards.size(); i++) {
-			_billboards[i].SetPosition(float(rand() % 11 + -10), float(rand() % 21 + -10), float(rand() % 21 + -10));
+			_billboards[i].SetPosition(float(rand() % 11 + -18), float(rand() % 15 + -14), float(rand() % 6 - 7));
 			_billboards[i].SetSpeed(1.0f);
 			_billboards[i].SetScale(6.0f,6.0f,6.0f);
 			_billboards[i].SetTransparency(_type);

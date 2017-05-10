@@ -31,7 +31,7 @@ public:
 	glm::mat4 GetModelMatrix();
 	Transform GetTransform();
 	~Billboard();
-	void Kill();
+	void Kill(int type);
 	void Revive(int type);
 	void SetSpeed(float speed);
 	void SetTransparency(int type);
