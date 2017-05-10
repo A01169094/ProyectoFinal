@@ -126,6 +126,8 @@ void Keyboard(unsigned char key, int y, int z)
 			_billboards[i].SetPosition(float(rand() % 21 + -10), float(rand() % 16 -5), float(rand() % 21 + -10));
 			_billboards[i].SetSpeed(1.0f);
 			_billboards[i].SetScale(1.0f, 1.0f, 1.0f);
+			_billboards[i].SetTransparency(_type);
+
 		}
 	}
 	if (key == '2')
@@ -136,6 +138,8 @@ void Keyboard(unsigned char key, int y, int z)
 			_billboards[i].SetPosition(float(rand() % 21 + -10), float(rand() % 16 - 5), float(rand() % 21 + -10));
 			_billboards[i].SetSpeed(1.0f);
 			_billboards[i].SetScale(1.0f, 1.0f, 1.0f);
+			_billboards[i].SetTransparency(_type);
+
 		}
 	}
 	if (key == '3')
@@ -145,7 +149,8 @@ void Keyboard(unsigned char key, int y, int z)
 		for (int i = 0; i < _billboards.size(); i++) {
 			_billboards[i].SetPosition(float(rand() % 11 + -10), float(rand() % 21 + -10), float(rand() % 21 + -10));
 			_billboards[i].SetSpeed(1.0f);
-			_billboards[i].SetScale(0.7f,0.7f,0.7f);
+			_billboards[i].SetScale(6.0f,6.0f,6.0f);
+			_billboards[i].SetTransparency(_type);
 		}
 	}
 	if (key == 'f') {

@@ -97,7 +97,7 @@ void Billboard::Kill()
 		if (_life < 40) {
 			_transparency-=0.025f;
 		}
-		if (_life == 0) {
+		if (_life == 0 || _transparency==0) {
 			_transparency = 0.0f;
 			ChangeDrawValue(false);
 		}
@@ -126,11 +126,23 @@ void Billboard::Revive(int type)
 			SetPosition(float(rand() % 11 + -10), float(rand() % 21 + -10), float(rand() % 21 + -10));
 	}
 		ChangeDrawValue(true);
-		_transparency = 1.0f;
+		SetTransparency(type);
 	}
 }
 
 void Billboard::SetSpeed(float speed)
 {
 	_speed = speed;
+}
+
+void Billboard::SetTransparency(int type) {
+	if (type == 1) {
+		_transparency = 1.0f;
+	}
+	if (type == 2) {
+		_transparency = 1.0f;
+	}
+	if (type == 3) {
+		_transparency = 0.7f;
+	}
 }

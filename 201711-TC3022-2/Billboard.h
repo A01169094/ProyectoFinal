@@ -34,5 +34,6 @@ public:
 	void Kill();
 	void Revive(int type);
 	void SetSpeed(float speed);
+	void SetTransparency(int type);
 };
 
